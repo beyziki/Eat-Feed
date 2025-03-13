@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QR Menu - HEYOOO RESTAURANT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #000;
+            color: #982626;
+        }
+        h1 {
+            text-align: center;
+            color: #d9534f;
+        }
+        .menu-kategori {
+            margin-bottom: 30px;
+            background-color: #000;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .menu-kategori h2 {
+            color: #333;
+            border-bottom: 2px solid #d9534f;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        .menu-item span {
+            font-weight: bold;
+            color: #d9534f;
+        }
+        .menu-item small {
+            color: #666;
+            display: block;
+            margin-top: 5px;
+        }
+        .menu-item div:last-child {
+            font-weight: bold;
+            color: #b52424;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Menu - HEYOOO RESTAURANT</h1>
+    <div id="menu-container">
+        <!-- Menü verileri buraya JavaScript ile eklenecek -->
+    </div>
+
+    <script>
+        // Menü verileri
+        const menuData = [
+            {
+                kategori: "Breakfast",
+                urunler: [
+                    { isim: "Eggs with Sausage", aciklama: "Sausage, 2 Eggs, Butter", fiyat: "70 TL" },
+                    { isim: "Breakfast Plate", aciklama: "Honey, Cream, Butter, Olive, Acuka, Strawberry Jam, 2 Cigaratte Pastry, Chips , Cheese, Tomato, Cucumber, Boiled Egga and Limitless Tea", fiyat: "170 TL" },
+                    { isim: "Mixed Breakfast for Two ", aciklama: "Eggs with Sausage, Chips, Cigaratte Pastry, Jam Options, Cheese Options, Limitless Tea", fiyat: "270 TL" },
+                    { isim: "Patates Kızartması", aciklama: "", fiyat: "50 TL" }
+                ]
+            },
+            {
+                kategori: "Soups",
+                urunler: [
+                    { isim: "Lentil Soup", aciklama: "Red Lentils, Spices", fiyat: "60 TL" },
+                    { isim: "Ezogelin Soup", aciklama: "Bulgur, Lentil, Tomato", fiyat: "65 TL" }
+                ]
+            },
+            {
+                kategori: "Snacks",
+                urunler: [
+                    { isim: "Cigaratte Pastry", aciklama: "4 pieces", fiyat: "40 TL" },
+                    { isim: "Patatoes Pieces", aciklama: "With Spices", fiyat: "45 TL" }
+                ]
+            },
+            {
+                kategori: "Meals",
+                urunler: [
+                    { isim: "Kebap", aciklama: "Adana Kebap, Rice Pilav, Noodle Soup", fiyat: "120 TL" },
+                    { isim: "Lahmacun", aciklama: "2 Pieces", fiyat: "50 TL" }
+                ]
+            },
+            {
+                kategori: "Sweets",
+                urunler: [
+                    { isim: "Baklava", aciklama: "With Walnut", fiyat: "40 TL" },
+                    { isim: "Künefe", aciklama: "Hot Service", fiyat: "60 TL" }
+                ]
+            }
+        ];
+        // Menüyü oluştur
+        const menuContainer = document.getElementById("menu-container");
+
+        if (menuData && menuData.length > 0) {
+            menuData.forEach(kategori => {
+                // Kategori başlığı
+                const kategoriHTML = `
+                    <div class="menu-kategori">
+                        <h2>${kategori.kategori}</h2>
+                        ${kategori.urunler.map(urun => `
+                            <div class="menu-item">
+                                <div>
+                                    <span>${urun.isim}</span>
+                                    <small>${urun.aciklama}</small>
+                                </div>
+                                <div>${urun.fiyat}</div>
+                            </div>
+                        `).join("")}
+                    </div>
+                `;
+                menuContainer.innerHTML += kategoriHTML;
+            });
+        } else {
+            menuContainer.innerHTML = "<p>Menü bulunamadı.</p>";
+        }
+    </script>
+</body>
+</html>
