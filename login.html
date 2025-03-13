@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heyooo Restorant - Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f6f6f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 350px;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .logo span {
+            color: #ffcc00;
+        }
+        .input-container {
+            position: relative;
+            width: 85%;
+            margin: 8px 0;
+        }
+        .input-box {
+            width: 93%;
+            padding: 12px 40px 12px 40px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .input-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            font-size: 16px;
+            pointer-events: none;
+        }
+        .input-box:focus {
+            outline: none;
+            border-color: #ffcc00; 
+        }
+        .login-button {
+            width: 50%;
+            padding: 12px;
+            margin-top: 12px;
+            border: none;
+            background-color: #ffcc00;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .login-button:hover {
+            background-color: #e6b800;
+        }
+        .options {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .signup-link {
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        a {
+            text-decoration: none;
+            color: #ff9900;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">EAT <span>FEED</span></div>
+        <div>HEYOOO RESTAURANT</div>
+        <div class="input-container">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" class="input-box" placeholder="Email">
+        </div>
+        <div class="input-container">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" class="input-box" placeholder="Password">
+        </div>
+        
+        <button class="login-button" onclick="window.location.href='index.html'">Login</button>
+        <div class="options">
+            <label><input type="checkbox"> Remember me</label>
+            <a href="#">Forgot password?</a>
+        </div>
+        <div class="signup-link">Don't you have an account? <a href="signup.html">Sign up</a></div>
+    </div>
+</body>
+</html>
