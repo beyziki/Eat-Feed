@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıtlı Kartlarım</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #E55D0F; /* Turuncu renk */
+            margin-bottom: 20px;
+        }
+
+        .cards-section {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: #444;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #ddd;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .card .card-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #E55D0F;
+        }
+
+        .edit-btn {
+            background-color: #E55D0F;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .edit-btn:hover {
+            background-color: #c94d0d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Kayıtlı Kartlarım</h2>
+
+        <!-- Kart 1 -->
+        <div class="cards-section">
+            <div class="card">
+                <h3>VISA Kart</h3>
+                <p class="card-number">**** **** **** 1234</p>
+                <p>Son Kullanma Tarihi: 12/25</p>
+                <p>Kart Sahibi: Ahmet Yılmaz</p>
+                <button class="edit-btn">Düzenle</button>
+            </div>
+        </div>
+
+        <!-- Kart 2 -->
+        <div class="cards-section">
+            <div class="card">
+                <h3>MasterCard</h3>
+                <p class="card-number">**** **** **** 5678</p>
+                <p>Son Kullanma Tarihi: 06/23</p>
+                <p>Kart Sahibi: Elif Demir</p>
+                <button class="edit-btn">Düzenle</button>
+            </div>
+        </div>
+
+        <!-- Kart 3 -->
+        <div class="cards-section">
+            <div class="card">
+                <h3>American Express</h3>
+                <p class="card-number">**** **** **** 9012</p>
+                <p>Son Kullanma Tarihi: 11/24</p>
+                <p>Kart Sahibi: Mehmet Kaya</p>
+                <button class="edit-btn">Düzenle</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

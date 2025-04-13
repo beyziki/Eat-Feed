@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #E55D0F; /* Turuncu başlık */
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-info img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .profile-info h3 {
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: #ddd;
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: #E55D0F;
+            transition: transform 0.3s;
+        }
+
+        .notification-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .notification-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+            display: none;
+            z-index: 10;
+        }
+
+        .notification-popup.show {
+            display: block;
+        }
+
+    </style>
+    <script>
+        function toggleNotifications() {
+            var notificationPopup = document.getElementById('notificationPopup');
+            notificationPopup.classList.toggle('show');
+        }
+    </script>
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-info">
+                <img src="resimler/sahip.jpg" class="profile-container"> <!-- Placeholder Image -->
+                <div>
+                    <h3>Ahmet Yılmaz</h3>
+                    <p>Kullanıcı Adı: ahmetyilmaz</p>
+                </div>
+            </div>
+            <span class="notification-icon" onclick="toggleNotifications()">🔔</span>
+        </div>
+        <h2>Profilim</h2>
+        <div id="notificationPopup" class="notification-popup">
+            <p>Yeni bir bildiriminiz var!</p>
+        </div>
+    </div>
+
+</body>
+</html>
