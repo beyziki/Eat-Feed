@@ -170,6 +170,79 @@ body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items:
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
+	  <style>
+      body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+          background-color: #000;
+          color: #982626;
+      }
+      h1 {
+          text-align: center;
+          color: #d9534f;
+      }
+      .menu-kategori {
+          margin-bottom: 30px;
+          background-color: #000;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .menu-kategori h2 {
+          color: #d9534f;
+          border-bottom: 2px solid #d9534f;
+          padding-bottom: 10px;
+          margin-bottom: 20px;
+      }
+      .menu-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+          padding: 10px;
+          border-bottom: 1px solid #eee;
+      }
+      .menu-item:last-child {
+          border-bottom: none;
+      }
+      .menu-item span {
+          font-weight: bold;
+          color: #d9534f;
+      }
+      .menu-item small {
+          color: #ccc;
+          display: block;
+          margin-top: 5px;
+      }
+      .menu-item div:last-child {
+          font-weight: bold;
+          color: #b52424;
+      }
+      .cart-button {
+          background-color: #d9534f;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+          font-size: 16px;
+          margin-left: 10px;
+      }
+      .cart-button:hover {
+          background-color: #b52424;
+      }
+      /* Sepet İkonu */
+      .sepet-link {
+          position: fixed;
+          top: 15px;
+          right: 20px;
+          z-index: 9999;
+      }
+      .sepet-icon {
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+      }
+  </style>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-xARMKCpmQ&callback=initMap">
 </script>
@@ -182,7 +255,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-x
                </button>
                <div class="collapse navbar-collapse" id="gerede-kebap">				  
 				  	<ul id="menu-menu-1" class="navbar-nav m-auto mb-2 mb-lg-0">
-                        <a  class="nav-link active">Dashboard</a></li>
+                        </li>
 <li id="menu-item-12" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-12">
     <a href="hakkimizda.html" class="nav-link active btn bg-black text-white">About Us</a>
 </li>
@@ -361,5 +434,52 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-x
     </script>
 	   <script src="lightbox.js"></script>
       <script src="bootstrap.bundle.min.js"></script>
+										   <script>
+         let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
+ 
+         function guncelleSepetGorunumu() {
+             document.getElementById("sepet-adet").textContent = `(${sepet.length})`;
+             localStorage.setItem("sepet", JSON.stringify(sepet));
+         }
+ 
+         function sepeteEkle(isim, fiyat) {
+             sepet.push({ isim, fiyat });
+             guncelleSepetGorunumu();
+         }
+ 
+         function sepeteCikar(isim) {
+             sepet = sepet.filter(urun => urun.isim !== isim);
+             guncelleSepetGorunumu();
+         }
+ 
+         const menuData = [
+             { kategori: "Breakfast", urunler: [{ isim: "Eggs with Sausage", aciklama: "Sausage, 2 Eggs, Butter", fiyat: "70 TL" }] },
+             { kategori: "Soups", urunler: [{ isim: "Lentil Soup", aciklama: "Red Lentils, Spices", fiyat: "60 TL" }] }
+         ];
+ 
+         const menuContainer = document.getElementById("menu-container");
+ 
+         menuData.forEach(kategori => {
+             let kategoriHTML = `<div class="menu-kategori">
+                 <h2>${kategori.kategori}</h2>
+                 ${kategori.urunler.map(urun => `
+                     <div class="menu-item">
+                         <div>
+                             <span>${urun.isim}</span>
+                             <small>${urun.aciklama}</small>
+                         </div>
+                         <div>
+                             ${urun.fiyat}
+                             <button class="cart-button" onclick="sepeteEkle('${urun.isim}', '${urun.fiyat}')">+</button>
+                             <button class="cart-button" onclick="sepeteCikar('${urun.isim}')">-</button>
+                         </div>
+                     </div>
+                 `).join("")}
+             </div>`;
+             menuContainer.innerHTML += kategoriHTML;
+         });
+ 
+         guncelleSepetGorunumu();
+     </script>
    </body>
 </html>
