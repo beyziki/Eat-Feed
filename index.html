@@ -9,11 +9,67 @@
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Inter:wght@100..900&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="style.css">
+      <script src="script.js" defer></script>
 	  
+      <style>
+         /* Sidebar stil ayarları */
+         .sidebar {
+             height: 100%;
+             width: 0;
+             position: fixed;
+             top: 0;
+             left: 0;
+             background-color: #111;
+             overflow-x: hidden;
+             transition: 0.5s;
+             padding-top: 60px;
+         }
+ 
+         /* Sidebar içindeki linklerin stili */
+         .sidebar a {
+             padding: 15px 20px;
+             text-decoration: none;
+             font-size: 18px;
+             color: white;
+             display: block;
+             transition: 0.3s;
+         }
+ 
+         /* Linklere hover efekti */
+         .sidebar a:hover {
+             background-color: #575757;
+         }
+ 
+         /* Sidebar'ı kapatma butonu */
+         .closebtn {
+             position: absolute;
+             top: 10px;
+             right: 20px;
+             font-size: 36px;
+             cursor: pointer;
+             color: white;
+         }
+ 
+         /* Menü butonunun stili */
+         .menu-btn {
+             font-size: 20px;
+             cursor: pointer;
+             background-color: #111;
+             color: white;
+             padding: 10px 20px;
+             border: none;
+             position: fixed;
+             top: 10px;
+             left: 10px;
+             z-index: 1000;
+         }
+ 
+     </style>
 	  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css" rel="stylesheet">
     <meta name='robots' content='max-image-preview:large' />
 	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
 	<link rel="alternate" type="application/rss+xml" title="HEYOOO RESTAURANT"/>
+
 <script type="text/javascript">
 /* <![CDATA[ */
 window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.temadiyari.com\/restoran\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.7.2"}};
@@ -170,7 +226,7 @@ body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items:
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
-	  <style>
+    <style>
       body {
           font-family: Arial, sans-serif;
           padding: 20px;
@@ -248,11 +304,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-x
 </script>
   </head>
   <body class="home blog">
-      <header class="usthead">
+      <header class="usthead">       
          <nav class="navbar navbar-expand-lg navbar-dark ustbar">
+           
             <div class="container">
                <span class="navbar-toggler-icon"></span>
                </button>
+               
                <div class="collapse navbar-collapse" id="gerede-kebap">				  
 				  	<ul id="menu-menu-1" class="navbar-nav m-auto mb-2 mb-lg-0">
                         </li>
@@ -264,8 +322,11 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-x
    <a href="vizyon-misyon.html" class="btn bg-black text-white">Vision & Mission</a>
 </li>
 
-<li  id="menu-item-14" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-14"><a 
-   class="nav-link active">Help</a></li>
+<li id="menu-item-14" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-14">
+   <a href="help.html" class="nav-link active">
+       <button class="help-button">Help</button>
+   </a>
+</li>
    <li class="menu-item nav-item">
     <a class="nav-link active" href="login.html">
         <button class="login-button">Log In</button>
@@ -278,7 +339,29 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-x
                   </a>
                </div>
             </div>
-		<a href="sepet.html" class="sepet-link" title="Your Cart">
+            <div id="mySidebar" class="sidebar">
+               <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+               <a href="profile.html">Profile</a>
+               <a href="profile_settings.html">Profile Settings</a>
+               <a href="wallet.html">Wallet</a>
+               <a href="orders.html">My Orders</a>
+               <a href="my_favourites.html">My Favourites</a>
+               <a href="Log_out.html">Log Out</a>
+           </div>
+           <button class="menu-btn" onclick="openNav()"> ☰ Menu</button>
+           
+           <script>
+               function openNav() {
+                   document.getElementById("mySidebar").style.width = "250px";
+               }
+           
+               function closeNav() {
+                   document.getElementById("mySidebar").style.width = "0";
+               }
+           </script>
+            
+
+            <a href="sepet.html" class="sepet-link" title="Your Cart">
                <img src="resimler/sepet.png" alt="Cart" class="sepet-icon oval-image">
            </a>
          </nav>        <div class="container py-5 position-relative">
@@ -437,7 +520,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-x
     </script>
 	   <script src="lightbox.js"></script>
       <script src="bootstrap.bundle.min.js"></script>
-										   <script>
+      <script>
          let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
  
          function guncelleSepetGorunumu() {
@@ -484,5 +567,6 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKqdnQJCZVESE_NgvfdvL2i-x
  
          guncelleSepetGorunumu();
      </script>
+
    </body>
 </html>
