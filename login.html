@@ -1,115 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heyooo Restorant - Login</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f6f6f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            width: 350px;
-            padding: 30px;
-            background-color: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            text-align: center;
-        }
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .logo span {
-            color: #ffcc00;
-        }
-        .input-container {
-            position: relative;
-            width: 85%;
-            margin: 8px 0;
-        }
-        .input-box {
-            width: 93%;
-            padding: 12px 40px 12px 40px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .input-container i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-            font-size: 16px;
-            pointer-events: none;
-        }
-        .input-box:focus {
-            outline: none;
-            border-color: #ffcc00; 
-        }
-        .login-button {
-            width: 50%;
-            padding: 12px;
-            margin-top: 12px;
-            border: none;
-            background-color: #ffcc00;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.3s;
-        }
-        .login-button:hover {
-            background-color: #e6b800;
-        }
-        .options {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        .signup-link {
-            font-size: 14px;
-            margin-top: 15px;
-        }
-        a {
-            text-decoration: none;
-            color: #ff9900;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Login | EatFeed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f6f6f6;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 400px;
+      padding: 40px;
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .logo img {
+      width: 60px;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .highlight {
+      color: #ffcc00;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      letter-spacing: 5px;
+      margin-top: 4px;
+    }
+
+    .button {
+      background-color: #ffcc00;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      margin: 10px 0;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background-color: #e6b800;
+    }
+
+    .form-container {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .input-container {
+      position: relative;
+      width: 100%;
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .input-container i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .input-box:focus {
+      outline: none;
+      border-color: #ffcc00;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .signup {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    a {
+      color: #ff9900;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">EAT <span>FEED</span></div>
-        <div>HEYOOO RESTAURANT</div>
-        <div class="input-container">
-            <i class="fa-solid fa-envelope"></i>
-            <input type="email" class="input-box" placeholder="Email">
-        </div>
-        <div class="input-container">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" class="input-box" placeholder="Password">
-        </div>
-        
-        <button class="login-button" onclick="window.location.href='index.html'">Login</button>
-        <div class="options">
-            <label><input type="checkbox"> Remember me</label>
-            <a href="#">Forgot password?</a>
-        </div>
-        <div class="signup-link">Don't you have an account? <a href="signup.html">Sign up</a></div>
+
+  <div class="container">
+    <div class="logo">
+      <img src="resimler/login.png" alt="cart">
+      <div>
+        <div class="title">EAT <span class="highlight">FEED</span></div>
+        <div class="subtitle">HEYOOO RESTAURANT</div>
+      </div>
     </div>
+
+    <!-- Login Seçim Ekranı -->
+    <div id="login-selection">
+      <button class="button" onclick="showLoginForm('staff')">STAFF LOGIN</button>
+      <button class="button" onclick="showLoginForm('user')">USER LOGIN</button>
+    </div>
+
+    <!-- Ortak Login Formu -->
+    <div class="form-container" id="login-form">
+      <form id="login-form-element">
+        <div class="input-container">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" class="input-box" id="email" placeholder="Email" required>
+        </div>
+        <div class="input-container">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" class="input-box" id="password" placeholder="Password" required>
+        </div>
+
+        <div class="options">
+          <label><input type="checkbox"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="button" id="login-button">Login</button>
+      </form>
+
+      <div class="signup">
+        Don’t you have an account? <a href="signup.html">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login tipi için global değişken -->
+  <script>
+    let loginType = "";
+
+    function showLoginForm(type) {
+      loginType = type;
+      document.getElementById('login-selection').style.display = 'none';
+      document.getElementById('login-form').style.display = 'block';
+    }
+  </script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCHjRtDcsnsuZ_gORHvUMqbBjeHXH5CPLU",
+      authDomain: "heyoo-ce671.firebaseapp.com",
+      projectId: "heyoo-ce671",
+      storageBucket: "heyoo-ce671.appspot.com",
+      messagingSenderId: "382320376794",
+      appId: "1:382320376794:web:YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("login-button").addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("Giriş başarılı:", user.email);
+
+          // Login türüne göre yönlendirme
+          if (loginType === 'staff') {
+            window.location.href = "staff.html";
+          } else {
+            window.location.href = "index.html";
+          }
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          alert("Giriş başarısız: " + errorMessage);
+        });
+    });
+  </script>
+
 </body>
 </html>
