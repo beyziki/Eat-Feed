@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şefler ve Yemekleri</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000000; /* Siyah arka plan */
+            color: white; /* Metin rengini beyaz yaparak okunabilirliği artırdım */
+        }
+        .chef-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: #333; /* Şef kartlarının arka planını koyu gri yapalım */
+        }
+        .chef-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .chef-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .chef-signature-dish {
+            font-style: italic;
+            color: #ccc;
+        }
+        .btn-hakkinda {
+            background-color: #ff5733; /* Turuncu buton */
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .btn-hakkinda:hover {
+            background-color: #e04e2a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Şefler ve Yemekleri</h1>
+
+    <div class="row">
+        <!-- Şef 1 -->
+        <div class="col-md-4">
+            <div class="chef-card">
+                <img src="resimler/sef1.jpg" alt="Şef 1" class="chef-img">
+                <h3 class="chef-name">Chef Beyza Karakaya</h3>
+                <p class="chef-bio">Beyza KRKY, 15 yıldır mutfakta ve ulusal yemek yarışmalarında kazandığı ödüllerle tanınan bir şef. Yaratıcı ve geleneksel mutfak tekniklerini birleştirerek menülerinde benzersiz lezzetler sunuyor.</p>
+                <p class="chef-signature-dish">İmza Tabak: Danilo Zanna'ya fark atan Risotto</p>
+                <a href="hakkimizda.html" class="btn-hakkinda">Hakkında</a>
+            </div>
+        </div>
+
+        <!-- Şef 2 -->
+        <div class="col-md-4">
+            <div class="chef-card">
+                <img src="resimler/sef2.jpg" alt="Şef 2" class="chef-img">
+                <h3 class="chef-name">Chef Beyza Erdem</h3>
+                <p class="chef-bio">Beyzoş Niloya Erdem, modern mutfağı geleneksel tatlarla harmanlayarak eşsiz bir yemek deneyimi sunuyor. Lezzet anlayışı, sade ama etkileyici.</p>
+                <p class="chef-signature-dish">İmza Tabak: Grolet'ten iyi meyvemsi tatlılar</p>
+                <a href="hakkimizda.html" class="btn-hakkinda">Hakkında</a>
+            </div>
+        </div>
+
+        <!-- Şef 3 -->
+        <div class="col-md-4">
+            <div class="chef-card">
+                <img src="resimler/sef3.jpg" alt="Şef 3" class="chef-img">
+                <h3 class="chef-name">Chef Helen Bulut</h3>
+                <p class="chef-bio">Helenişko Bulut, Akdeniz mutfağından ilham alarak benzersiz tarifler yaratıyor. Baharatları ve doğal malzemeleri kullanarak her yemeği bir sanat eserine dönüştürüyor.</p>
+                <p class="chef-signature-dish">İmza Tabak: Nusret'ten iyi tuzlu et</p>
+                <a href="hakkimizda.html" class="btn-hakkinda">Hakkında</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
