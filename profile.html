@@ -18,7 +18,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .profile-container {
@@ -34,13 +35,14 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #E55D0F; /* Turuncu başlık */
+            color: #E55D0F;
         }
 
         .profile-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 20px;
         }
 
         .profile-info {
@@ -53,6 +55,8 @@
             height: 100px;
             border-radius: 50%;
             margin-right: 20px;
+            object-fit: cover;
+            background-color: #333;
         }
 
         .profile-info h3 {
@@ -62,6 +66,7 @@
 
         .profile-info p {
             color: #ddd;
+            margin-bottom: 3px;
         }
 
         .notification-icon {
@@ -91,12 +96,140 @@
             display: block;
         }
 
+        .profile-details {
+            margin-top: 30px;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .detail-label {
+            width: 150px;
+            color: #E55D0F;
+            font-weight: bold;
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #fff;
+        }
+
+        .logout-btn {
+            display: block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #E55D0F;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+        .logout-btn:hover {
+            background-color: #c04d0d;
+        }
     </style>
-    <script>
-        function toggleNotifications() {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHjRtDcsnsuZ_gORHvUMqbBjeHXH5CPLU",
+            authDomain: "heyoo-ce671.firebaseapp.com",
+            projectId: "heyoo-ce671",
+            storageBucket: "heyoo-ce671.appspot.com",
+            messagingSenderId: "382320376794",
+            appId: "1:382320376794:web:YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Check authentication state
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is signed in
+                console.log("User is signed in:", user.uid);
+                
+                // Determine user role (user or staff)
+                let userRole = 'user';
+                let userData = null;
+                
+                // First try to get user data from 'users' collection
+                const userDoc = await getDoc(doc(db, 'user', user.uid));
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                    userRole = 'user';
+                } else {
+                    // If not found in users, try staff collection
+                    const staffDoc = await getDoc(doc(db, 'staff', user.uid));
+                    if (staffDoc.exists()) {
+                        userData = staffDoc.data();
+                        userRole = 'staff';
+                    }
+                }
+                
+                if (userData) {
+                    // Update profile page with user data
+                    updateProfilePage(user, userData, userRole);
+                } else {
+                    console.error("User data not found in either collection");
+                    alert("User data not found. Please contact support.");
+                    signOut(auth).then(() => {
+                        window.location.href = "login.html";
+                    });
+                }
+            } else {
+                // User is signed out
+                console.log("User is signed out");
+                window.location.href = "login.html";
+            }
+        });
+
+        function updateProfilePage(user, userData, userRole) {
+            // Update profile header
+            const profileImg = document.querySelector('.profile-info img');
+            const profileName = document.querySelector('.profile-info h3');
+            const profileUsername = document.querySelector('.profile-info p');
+            
+            // Set profile image (placeholder if none)
+            profileImg.src = userData.profileImage || "https://via.placeholder.com/100";
+            profileImg.alt = `${userData.name}'s profile picture`;
+            
+            // Set name and username
+            profileName.textContent = `${userData.name} ${userData.surname}`;
+            profileUsername.textContent = `Username: ${user.email.split('@')[0]}`;
+            
+            // Update profile details
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-phone').textContent = userData.phone || 'Not provided';
+            document.getElementById('user-role').textContent = userRole === 'staff' ? 'Staff Member' : 'Regular User';
+            document.getElementById('user-joined').textContent = new Date(userData.createdAt).toLocaleDateString();
+            
+            // Add logout functionality
+            document.querySelector('.logout-btn').addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = "login.html";
+                }).catch((error) => {
+                    console.error("Logout error:", error);
+                });
+            });
+        }
+
+        // Notification toggle
+        window.toggleNotifications = function() {
             var notificationPopup = document.getElementById('notificationPopup');
             notificationPopup.classList.toggle('show');
-        }
+        };
     </script>
 </head>
 <body>
@@ -104,17 +237,39 @@
     <div class="profile-container">
         <div class="profile-header">
             <div class="profile-info">
-                <img src="resimler/sahip.jpg" class="profile-container"> <!-- Placeholder Image -->
+                <img src="https://via.placeholder.com/100" alt="Profile picture">
                 <div>
-                    <h3>Ahmet Yılmaz</h3>
-                    <p>Kullanıcı Adı: ahmetyilmaz</p>
+                    <h3>Loading...</h3>
+                    <p>Username: loading...</p>
                 </div>
             </div>
             <span class="notification-icon" onclick="toggleNotifications()">🔔</span>
         </div>
-        <h2>Profilim</h2>
+        <h2>My Profile</h2>
+        
+        <div class="profile-details">
+            <div class="detail-row">
+                <div class="detail-label">Email:</div>
+                <div class="detail-value" id="user-email">loading...</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Phone:</div>
+                <div class="detail-value" id="user-phone">loading...</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Account Type:</div>
+                <div class="detail-value" id="user-role">loading...</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Member Since:</div>
+                <div class="detail-value" id="user-joined">loading...</div>
+            </div>
+        </div>
+        
+        <button class="logout-btn">Logout</button>
+        
         <div id="notificationPopup" class="notification-popup">
-            <p>Yeni bir bildiriminiz var!</p>
+            <p>No new notifications</p>
         </div>
     </div>
 
