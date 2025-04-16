@@ -1,186 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heyooo Restorant - Signup</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f6f6f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            width: 400px;
-            padding: 40px;
-            background-color: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            text-align: center;
-        }
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .logo span {
-            color: #ffcc00;
-        }
-        .input-container {
-            position: relative;
-            width: 100%;
-            margin: 8px 0;
-            display: flex;
-            align-items: center;
-        }
-        .input-box {
-            width: 100%;
-            padding: 12px 12px 12px 40px ;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .input-container i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-            font-size: 16px;
-            pointer-events: none;
-        }
-        .input-box:focus {
-            outline: none;
-            border-color: #ffcc00; 
-        }
-        .eye-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-            cursor: pointer;
-        }
-        .login-button {
-            width: 50%;
-            padding: 12px;
-            margin-top: 12px;
-            border: none;
-            background-color: #ffcc00;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.3s;
-        }
-        .login-button:hover {
-            background-color: #e6b800;
-        }
-        .options {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        .signup-link {
-            font-size: 14px;
-            margin-top: 15px;
-        }
-        a {
-            text-decoration: none;
-            color: #ff9900;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heyooo Restaurant - Signup</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f6f6f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 400px;
+      padding: 40px;
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .logo span {
+      color: #ffcc00;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 16px;
+      background-color: #fff;
+    }
+
+    .input-container i {
+      margin-right: 12px;
+      color: #555;
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .input-container input, select {
+      border: none;
+      outline: none;
+      font-size: 15px;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 24px;
+      border: none;
+      background-color: #ffcc00;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .login-button:hover {
+      background-color: #e6b800;
+    }
+
+    .signup-link {
+      font-size: 14px;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: #ff9900;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .eye-icon {
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">EAT <span>FEED</span></div>
-        <div>HEYOOO RESTAURANT</div>
-        
-        <!-- Name, Surname, Email, Phone, Password, Confirm Password -->
-        <div class="input-container">
-            <i class="fa-solid fa-user"></i>
-            <input type="text" class="input-box" placeholder="Name">
-        </div>
-        <div class="input-container">
-            <i class="fa-solid fa-user"></i>
-            <input type="text" class="input-box" placeholder="Surname">
-        </div>
-        <div class="input-container">
-            <i class="fa-solid fa-envelope"></i>
-            <input type="email" class="input-box" placeholder="Email">
-        </div>
-        <div class="input-container">
-            <i class="fa-solid fa-phone"></i>
-            <input type="text" class="input-box" placeholder="Phone Number">
-        </div>
+  <div class="container">
+    <div class="logo">EAT <span>FEED</span></div>
+    <div style="text-align: center;">HEYOOO RESTAURANT</div>
 
-        <!-- Password Input -->
-        <div class="input-container">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" id="password" class="input-box" placeholder="Password">
-            <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
-        </div>
-
-        <!-- Confirm Password Input -->
-        <div class="input-container">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" id="confirmPassword" class="input-box" placeholder="Confirm Password">
-            <i class="fa-solid fa-eye-slash" id="toggleConfirmPassword"></i>
-        </div>
-
-        <button class="login-button">Sign Up</button>
-        <div class="signup-link">Already have an account? <a href="login.html">Login</a></div>
+    <div class="input-container">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="name" placeholder="Name" required />
     </div>
 
-    <script>
-        // Password visibility toggle
-        const togglePassword = document.getElementById('togglePassword');
-        const password = document.getElementById('password');
-        togglePassword.addEventListener('click', function () {
-            // Toggle password visibility
-            if (password.type === 'password') {
-                password.type = 'text';  // Show password
-                this.classList.remove('fa-eye-slash');
-                this.classList.add('fa-eye');
-            } else {
-                password.type = 'password';  // Hide password
-                this.classList.remove('fa-eye');
-                this.classList.add('fa-eye-slash');
-            }
-        });
+    <div class="input-container">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="surname" placeholder="Surname" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-envelope"></i>
+      <input type="email" id="email" placeholder="Email" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-phone"></i>
+      <input type="tel" id="phone" placeholder="+90 5XX XXX XX XX" value="+90" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="password" placeholder="Password" required />
+      <i class="fa-solid fa-eye eye-icon" id="eyeIconPassword" onclick="togglePasswordVisibility('password')"></i>
+    </div>
     
-        // Confirm Password visibility toggle
-        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-        const confirmPassword = document.getElementById('confirmPassword');
-        toggleConfirmPassword.addEventListener('click', function () {
-            // Toggle confirm password visibility
-            if (confirmPassword.type === 'password') {
-                confirmPassword.type = 'text';  // Show confirm password
-                this.classList.remove('fa-eye-slash');
-                this.classList.add('fa-eye');
-            } else {
-                confirmPassword.type = 'password';  // Hide confirm password
-                this.classList.remove('fa-eye');
-                this.classList.add('fa-eye-slash');
-            }
+    <div class="input-container">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <i class="fa-solid fa-eye eye-icon" id="eyeIconConfirmPassword" onclick="togglePasswordVisibility('confirmPassword')"></i>
+    </div>
+
+    <!-- User type selection -->
+    <div class="input-container">
+      <i class="fa-solid fa-user-tag"></i>
+      <select id="userType" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="user">User</option>
+        <option value="staff">Staff</option>
+      </select>
+    </div>
+
+    <button class="login-button" onclick="signUp()">Sign Up</button>
+
+    <div class="signup-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCHjRtDcsnsuZ_gORHvUMqbBjeHXH5CPLU",
+      authDomain: "heyoo-ce671.firebaseapp.com",
+      projectId: "heyoo-ce671",
+      storageBucket: "heyoo-ce671.appspot.com",
+      messagingSenderId: "382320376794",
+      appId: "1:382320376794:web:YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.signUp = async function () {
+      const name = document.getElementById("name").value.trim();
+      const surname = document.getElementById("surname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const userType = document.getElementById("userType").value;
+
+      if (!name || !surname || !email || !phone || !password || !confirmPassword || !userType) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await updateProfile(user, {
+          displayName: `${name} ${surname}`
         });
-    
-        // Sign up button redirect to login page
-        const signUpButton = document.querySelector('.login-button');
-        signUpButton.addEventListener('click', function () {
-            window.location.href = 'login.html'; // Yönlendirme işlemi
+
+        // Firestore koleksiyonuna kayıt
+        await setDoc(doc(db, userType, user.uid), {
+          uid: user.uid,
+          name: name,
+          surname: surname,
+          email: email,
+          phone: phone,
+          role: userType,
+          createdAt: new Date().toISOString()
         });
-    </script>
-    
+
+        alert("Registration successful!");
+        window.location.href = userType === "staff" ? "staff-login.html" : "user-login.html";
+      } catch (error) {
+        console.error("Signup error:", error.message);
+        alert("Error: " + error.message);
+      }
+    };
+
+    window.togglePasswordVisibility = function (inputId) {
+      const input = document.getElementById(inputId);
+      const eyeIcon = document.getElementById("eyeIcon" + inputId.charAt(0).toUpperCase() + inputId.slice(1));
+
+      if (input.type === "password") {
+        input.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        eyeIcon.classList.add("fa-eye");
+        eyeIcon.classList.remove("fa-eye-slash");
+      }
+    };
+  </script>
 </body>
 </html>
