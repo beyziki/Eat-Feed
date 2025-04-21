@@ -13,6 +13,7 @@
       color: white;
       display: flex;
       height: 100vh;
+      position: relative;
     }
 
     .left-panel {
@@ -67,12 +68,33 @@
       background-color: #ff3c1f;
     }
 
+    /* Logout butonu */
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #e2360c;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .logout-btn:hover {
+      background-color: #ff3c1f;
+    }
   </style>
 </head>
 <body>
 
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
   <div class="left-panel">
-    <img src="resimler/Heyoo.png" alt> <!-- logoyu buraya koy -->
+    <img src="resimler/Heyoo.png" alt>
   </div>
 
   <div class="right-panel">
@@ -84,16 +106,26 @@
       <i class="fa-solid fa-calendar-check"></i> Reservations
     </button>
 
-    <button class="menu-button" onclick="window.location.href='customer_info.html'">
+    <button class="menu-button" onclick="location.href='customer_info.html'">
       <i class="fa-solid fa-user"></i> Customer Info
     </button>
-    
 
-    <button class="menu-button" onclick="window.location.href='reports.html'">
+    <button class="menu-button" onclick="location.href='reports.html'">
       <i class="fa-solid fa-chart-line"></i> Reports
     </button>
-    
   </div>
+
+  <script>
+    function logout() {
+      // Geri tuşuyla dönmeyi engellemek için geçmişi temizleyerek yönlendir
+      window.location.replace("login.html");
+    }
+
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, "", window.location.href);
+    };
+  </script>
 
 </body>
 </html>
