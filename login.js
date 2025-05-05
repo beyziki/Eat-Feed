@@ -1,20 +1,51 @@
-// login.js
-
 // Formu seçiyoruz
 const form = document.getElementById('loginForm');
 
-// Form gönderildiğinde bu fonksiyon çalışacak
-form.addEventListener('submit', function(event) {
-    event.preventDefault();  // Sayfanın yeniden yüklenmesini engeller
+form.addEventListener('submit', async function(event) {
+  event.preventDefault();  // Sayfanın yeniden yüklenmesini engeller
 
-    // Burada girişin başarılı olduğu varsayılacak
-    // Kullanıcı adı ve şifreyi almak
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+  const email = document.getElementById('user-email').value;
+  const password = document.getElementById('user-password').value;
 
-    // Şu anda herhangi bir doğrulama yapılmayacak
-    // Form verileri kontrol edilebilir, ancak bu aşamada giriş başarılı kabul ediliyor
+  try {
+    const response = await fetch('/api/userlogin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-    // Kullanıcı başarıyla giriş yaptıktan sonra ana sayfaya yönlendir
-    window.location.href = 'index.html';  // Ana sayfaya yönlendirme
+    const result = await response.json();
+    
+    const jwt = require('jsonwebtoken');
+
+    // Kullanıcı giriş işlemi sonrası token oluşturma
+    function generateToken(user) {
+        const token = jwt.sign({ email: user.email, id: user.id }, 'your_secret_key', { expiresIn: '1h' });
+        return token;
+    }
+    
+
+    if (response.ok && result.success) {
+      // Başarılı giriş sonrası token ve kullanıcı bilgilerini kaydediyoruz
+localStorage.setItem('userToken', result.token);
+localStorage.setItem('currentUser', JSON.stringify(result.user));
+
+
+      // 👤 Role göre yönlendirme
+      if (result.role === 'user') {
+        window.location.href = 'indexUser.html';
+      } else if (result.role === 'admin') {
+        window.location.href = 'stafflogin.html';
+      } else {
+        alert('Bilinmeyen rol: ' + result.role);
+      }
+    } else {
+      alert(result.message || 'Giriş başarısız');
+    }
+  } catch (error) {
+    console.error('Giriş hatası:', error);
+    alert('Sunucu hatası.');
+  }
 });

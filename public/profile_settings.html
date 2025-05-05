@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000; /* Siyah arka plan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .settings-container {
+            width: 400px;
+            background: #1a1a1a; /* Koyu gri kutu */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #fff; /* Beyaz başlık */
+        }
+
+        .settings-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #E55D0F; /* Turuncu butonlar */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .settings-btn:hover {
+            background: #c94d0d; /* Daha koyu turuncu */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="settings-container">
+        <h2>Profile Settings</h2>
+        
+        <button class="settings-btn" onclick="window.location.href='user_info.html'">User Infos</button>
+        <button class="settings-btn" onclick="window.location.href='address_info.html'">My Address</button>
+        <button class="settings-btn" onclick="window.location.href='saved_cards.html'">Saved Cards</button>
+        <button class="settings-btn" onclick="window.location.href='email_change.html'">E-mail Changes</button>
+        <button class="settings-btn" onclick="window.location.href='password_change.html'">Password Changes</button>
+        <button class="settings-btn" onclick="window.location.href='privacy_policy.html'">Privacy Policy</button>
+        <button class="settings-btn" onclick="window.location.href='notification_preferences.html'">Notification Preferences</button>
+        <button class="settings-btn" onclick="window.location.href='change_country.html'">Change Country</button>
+        <button class="settings-btn" onclick="window.location.href='login_attempts.html'">Login Attempts</button>
+    </div>
+
+</body>
+</html>

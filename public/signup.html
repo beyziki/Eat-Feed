@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heyooo Restaurant - Signup</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f6f6f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 400px;
+      padding: 40px;
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .logo span {
+      color: #ffcc00;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 16px;
+      background-color: #fff;
+    }
+
+    .input-container i {
+      margin-right: 12px;
+      color: #555;
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .input-container input, select {
+      border: none;
+      outline: none;
+      font-size: 15px;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 24px;
+      border: none;
+      background-color: #ffcc00;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .login-button:hover {
+      background-color: #e6b800;
+    }
+
+    .signup-link {
+      font-size: 14px;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: #ff9900;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .eye-icon {
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">EAT <span>FEED</span></div>
+    <div style="text-align: center;">HEYOOO RESTAURANT</div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="name" placeholder="Name" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="surname" placeholder="Surname" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-envelope"></i>
+      <input type="email" id="email" placeholder="Email" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-phone"></i>
+      <input type="tel" id="phone" placeholder="+90 5XX XXX XX XX" value="+90" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="password" placeholder="Password" required />
+      <i class="fa-solid fa-eye eye-icon" id="eyeIconPassword" onclick="togglePasswordVisibility('password')"></i>
+    </div>
+    
+    <div class="input-container">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <i class="fa-solid fa-eye eye-icon" id="eyeIconConfirmPassword" onclick="togglePasswordVisibility('confirmPassword')"></i>
+    </div>
+
+    <!-- User type selection -->
+    <div class="input-container">
+      <i class="fa-solid fa-user-tag"></i>
+      <select id="userType" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="user">User</option>
+        <option value="staff">Staff</option>
+      </select>
+    </div>
+
+    <button class="login-button" onclick="signUp()">Sign Up</button>
+
+    <div class="signup-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    async function signUp() {
+      const name = document.getElementById("name").value.trim();
+      const surname = document.getElementById("surname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const userType = document.getElementById("userType").value;
+  
+      // Validasyonlar
+      if (!name || !surname || !email || !phone || !password || !confirmPassword || !userType) {
+        alert("Lütfen tüm alanları doldurun.");
+        return;
+      }
+  
+      if (password !== confirmPassword) {
+        alert("Şifreler eşleşmiyor.");
+        return;
+      }
+  
+      try {
+        const response = await fetch('http://localhost:5000/api/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            surname,
+            email,
+            phone,
+            password,
+            userType
+          })
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert(result.message || "Kayıt başarılı!");
+          window.location.href = userType === "staff" ? "staff-login.html" : "userlogin.html";
+        } else {
+          alert(result.message || "Kayıt sırasında bir hata oluştu");
+        }
+      } catch (error) {
+        console.error("Kayıt hatası:", error);
+        alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+      }
+    }
+  
+    function togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      const eyeIcon = document.getElementById("eyeIcon" + inputId.charAt(0).toUpperCase() + inputId.slice(1));
+  
+      if (input.type === "password") {
+        input.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        eyeIcon.classList.add("fa-eye");
+        eyeIcon.classList.remove("fa-eye-slash");
+      }
+    }
+  </script>
+  <script src="signup.js"></script>
+
+</body>
+</html>

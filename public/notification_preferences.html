@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Preferences</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #E55D0F;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            background-color: #333;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .notification-option {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .notification-option label {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 50px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            border-radius: 50px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #E55D0F;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #999;
+        }
+
+        .footer a {
+            color: #E55D0F;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Notification Preferencess</h1>
+
+        <div class="section">
+            <h2>Please choose notification types</h2>
+
+            <div class="notification-option">
+                <label for="order-updates">Order Updates</label>
+                <label class="switch">
+                    <input type="checkbox" id="order-updates" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="notification-option">
+                <label for="promo-notifications">Promo Notifications</label>
+                <label class="switch">
+                    <input type="checkbox" id="promo-notifications" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="notification-option">
+                <label for="reminder-notifications">Reminder Notifications</label>
+                <label class="switch">
+                    <input type="checkbox" id="reminder-notifications" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="notification-option">
+                <label for="security-notifications">Security Notifications</label>
+                <label class="switch">
+                    <input type="checkbox" id="security-notifications" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="notification-option">
+                <label for="newsletter-subscription">Newsletter Subscription</label>
+                <label class="switch">
+                    <input type="checkbox" id="newsletter-subscription" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 All Rigths Reserved. <a href="terms_and_conditions.html">Terms and Conditions</a> | <a href="privacy_policy.html">Privacy Policy</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings | EatFeed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f6f6f6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .form-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 6px;
+      color: #333;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #e6b800;
+    }
+
+    .section-title {
+      margin-top: 40px;
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #444;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Settings</h2>
+
+    <!-- Profile Settings -->
+    <div class="section-title">Profile Information</div>
+    <div class="form-group">
+      <label for="full-name">Full Name</label>
+      <input type="text" id="full-name" placeholder="John Smith">
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="john@example.com">
+    </div>
+
+    <!-- Password Change -->
+    <div class="section-title">Change Password</div>
+    <div class="form-group">
+      <label for="current-password">Current Password</label>
+      <input type="password" id="current-password" placeholder="••••••••">
+    </div>
+    <div class="form-group">
+      <label for="new-password">New Password</label>
+      <input type="password" id="new-password" placeholder="••••••••">
+    </div>
+
+    <!-- Notifications -->
+    <div class="section-title">Notification Preferences</div>
+    <div class="form-group">
+      <label><input type="checkbox" id="email-updates" checked> Receive email updates</label>
+    </div>
+    <div class="form-group">
+      <label><input type="checkbox" id="sms-alerts"> Receive SMS alerts</label>
+    </div>
+
+    <!-- Theme Settings -->
+    <div class="section-title">Theme</div>
+    <div class="form-group">
+      <label for="theme-select">Choose Theme</label>
+      <select id="theme-select">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+
+    <!-- Save Button -->
+    <div class="form-actions">
+      <button class="btn" onclick="saveSettings()">Save Changes</button>
+    </div>
+  </div>
+
+  <script>
+    function saveSettings() {
+      alert("Settings saved successfully!");
+      // Gerçek projede burada veriler sunucuya gönderilebilir.
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Address Info</title>
+    <style>
+        :root {
+            --primary-color: #E55D0F;
+            --secondary-color: #1a1a1a;
+            --background-dark: #333;
+            --background-light: #444;
+            --text-color: #fff;
+            --text-secondary: #ccc;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .add-address-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .add-address-btn:hover {
+            background-color: #c94d0d;
+            transform: translateY(-2px);
+        }
+
+        .address-section {
+            background-color: var(--background-dark);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .address-section:hover {
+            transform: translateY(-3px);
+        }
+
+        .address-section h3 {
+            color: var(--text-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .address {
+            padding: 15px;
+            background-color: var(--background-light);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .address p {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        .address .address-title {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .edit-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #c94d0d;
+        }
+
+        .delete-btn {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+
+        .default-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .default-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        .default-address {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .default-badge {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Modal Stilleri */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: var(--background-dark);
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            animation: modalopen 0.4s;
+        }
+
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--text-color);
+        }
+
+        .modal h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            color: var(--text-color);
+            font-size: 16px;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .cancel-btn {
+            background-color: #666;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background-color: #555;
+        }
+
+        .save-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .save-btn:hover {
+            background-color: #c94d0d;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            
+            .address-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--background-dark);
+            border-radius: 10px;
+        }
+
+        .empty-state img {
+            width: 100px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>My Addresses</h1>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">B</div>
+                <span id="username">Beyza</span>
+            </div>
+        </header>
+
+        <button class="add-address-btn" id="addAddressBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Add New Address
+        </button>
+
+        <div id="addressesContainer">
+            <!-- Adresler buraya dinamik olarak eklenecek -->
+            <div class="empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+                <h3>No Addresses Found</h3>
+                <p>You haven't added any addresses yet. Click the button above to add your first address.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adres Ekleme/Düzenleme Modalı -->
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add New Address</h2>
+            <form id="addressForm">
+                <input type="hidden" id="addressId">
+                
+                <div class="form-group">
+                    <label for="addressType">Address Type</label>
+                    <select id="addressType" required>
+                        <option value="">Select address type</option>
+                        <option value="Home">Home</option>
+                        <option value="Work">Work</option>
+                        <option value="Summer House">Summer House</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addressTitle">Address Title</label>
+                    <input type="text" id="addressTitle" placeholder="e.g. My Home, Office, etc." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addressDetails">Address Details</label>
+                    <input type="text" id="addressDetails" placeholder="Street, building, apartment, etc." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" id="postalCode" placeholder="Postal/Zip code" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isDefault"> Set as default address
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn cancel-btn" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn save-btn">Save Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Kullanıcı bilgileri
+        let currentUser = {
+            id: 'user1',
+            name: 'Beyza',
+            avatar: 'B'
+        };
+
+        // Adres verileri (localStorage'dan alınacak veya boş array)
+        let addresses = JSON.parse(localStorage.getItem(`userAddresses_${currentUser.id}`)) || [];
+
+        // DOM Elementleri
+        const usernameElement = document.getElementById('username');
+        const userAvatarElement = document.getElementById('userAvatar');
+        const addressesContainer = document.getElementById('addressesContainer');
+        const addAddressBtn = document.getElementById('addAddressBtn');
+        const addressModal = document.getElementById('addressModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const addressForm = document.getElementById('addressForm');
+        const addressIdInput = document.getElementById('addressId');
+        const addressTypeSelect = document.getElementById('addressType');
+        const addressTitleInput = document.getElementById('addressTitle');
+        const addressDetailsInput = document.getElementById('addressDetails');
+        const postalCodeInput = document.getElementById('postalCode');
+        const isDefaultCheckbox = document.getElementById('isDefault');
+        const closeModalBtn = document.querySelector('.close');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', function() {
+            // Kullanıcı bilgilerini ayarla
+            usernameElement.textContent = currentUser.name;
+            userAvatarElement.textContent = currentUser.avatar;
+            
+            // Adresleri yükle
+            loadAddresses();
+            
+            // Örnek adresler ekle (sadece ilk kez çalıştığında)
+            if (addresses.length === 0 && currentUser.name === 'Beyza') {
+                addSampleAddresses();
+            }
+        });
+
+        // Örnek adresler ekleme
+        function addSampleAddresses() {
+            const sampleAddresses = [
+                {
+                    id: 'addr1',
+                    type: 'Home',
+                    title: 'Home Address',
+                    details: 'İstanbul, Kadıköy, Moda Caddesi No: 10, Daire 5',
+                    postalCode: '34710',
+                    isDefault: true
+                },
+                {
+                    id: 'addr2',
+                    type: 'Work',
+                    title: 'Work Address',
+                    details: 'İstanbul, Beşiktaş, Barbaros Bulvarı No: 20, Kat 3',
+                    postalCode: '34349',
+                    isDefault: false
+                },
+                {
+                    id: 'addr3',
+                    type: 'Summer House',
+                    title: 'Summer House',
+                    details: 'Çeşme, Alaçatı Mahallesi, 50. Sokak No: 8',
+                    postalCode: '35930',
+                    isDefault: false
+                }
+            ];
+            
+            addresses = sampleAddresses;
+            saveAddresses();
+            loadAddresses();
+        }
+
+        // Adresleri yükle
+        function loadAddresses() {
+            if (addresses.length === 0) {
+                addressesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <h3>No Addresses Found</h3>
+                        <p>You haven't added any addresses yet. Click the button above to add your first address.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            addresses.forEach(address => {
+                const defaultBadge = address.isDefault ? '<span class="default-badge">Default</span>' : '';
+                
+                html += `
+                    <div class="address-section">
+                        <h3>${address.type} ${defaultBadge}</h3>
+                        <div class="address ${address.isDefault ? 'default-address' : ''}">
+                            <p class="address-title">${address.title}:</p>
+                            <p>${address.details}</p>
+                            <p class="address-title">Postal Code:</p>
+                            <p>${address.postalCode}</p>
+                            
+                            <div class="address-actions">
+                                <button class="btn edit-btn" data-id="${address.id}">Edit</button>
+                                <button class="btn delete-btn" data-id="${address.id}">Delete</button>
+                                ${!address.isDefault ? `<button class="btn default-btn" data-id="${address.id}">Set as Default</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            addressesContainer.innerHTML = html;
+            
+            // Olay dinleyicilerini ekle
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', editAddress);
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', deleteAddress);
+            });
+            
+            document.querySelectorAll('.default-btn').forEach(btn => {
+                btn.addEventListener('click', setDefaultAddress);
+            });
+        }
+
+        // Adres ekleme modalını aç
+        addAddressBtn.addEventListener('click', function() {
+            addressIdInput.value = '';
+            addressForm.reset();
+            modalTitle.textContent = 'Add New Address';
+            addressModal.style.display = 'block';
+        });
+
+        // Adres düzenleme
+        function editAddress(e) {
+            const addressId = e.target.getAttribute('data-id');
+            const address = addresses.find(addr => addr.id === addressId);
+            
+            if (address) {
+                addressIdInput.value = address.id;
+                addressTypeSelect.value = address.type;
+                addressTitleInput.value = address.title;
+                addressDetailsInput.value = address.details;
+                postalCodeInput.value = address.postalCode;
+                isDefaultCheckbox.checked = address.isDefault;
+                
+                modalTitle.textContent = 'Edit Address';
+                addressModal.style.display = 'block';
+            }
+        }
+
+        // Adres silme
+        function deleteAddress(e) {
+            if (confirm('Are you sure you want to delete this address?')) {
+                const addressId = e.target.getAttribute('data-id');
+                addresses = addresses.filter(addr => addr.id !== addressId);
+                saveAddresses();
+                loadAddresses();
+            }
+        }
+
+        // Varsayılan adres ayarla
+        function setDefaultAddress(e) {
+            const addressId = e.target.getAttribute('data-id');
+            
+            addresses.forEach(addr => {
+                addr.isDefault = (addr.id === addressId);
+            });
+            
+            saveAddresses();
+            loadAddresses();
+        }
+
+        // Form gönderimi
+        addressForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const addressData = {
+                id: addressIdInput.value || generateId(),
+                type: addressTypeSelect.value,
+                title: addressTitleInput.value,
+                details: addressDetailsInput.value,
+                postalCode: postalCodeInput.value,
+                isDefault: isDefaultCheckbox.checked
+            };
+            
+            // Eğer bu yeni varsayılan adres ise, diğerlerinin varsayılanlığını kaldır
+            if (addressData.isDefault) {
+                addresses.forEach(addr => {
+                    addr.isDefault = false;
+                });
+            }
+            
+            // Eğer düzenleme yapılıyorsa, eski adresi bul ve güncelle
+            const existingIndex = addresses.findIndex(addr => addr.id === addressData.id);
+            
+            if (existingIndex !== -1) {
+                addresses[existingIndex] = addressData;
+            } else {
+                addresses.push(addressData);
+            }
+            
+            saveAddresses();
+            loadAddresses();
+            addressModal.style.display = 'none';
+        });
+
+        // Modal kapatma
+        closeModalBtn.addEventListener('click', function() {
+            addressModal.style.display = 'none';
+        });
+        
+        cancelBtn.addEventListener('click', function() {
+            addressModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', function(e) {
+            if (e.target === addressModal) {
+                addressModal.style.display = 'none';
+            }
+        });
+
+        // ID oluşturma
+        function generateId() {
+            return 'addr_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Adresleri kaydet
+        function saveAddresses() {
+            localStorage.setItem(`userAddresses_${currentUser.id}`, JSON.stringify(addresses));
+        }
+
+        // Kullanıcı değiştirme (demo amaçlı)
+        function changeUser(userName) {
+            currentUser = {
+                id: userName.toLowerCase() === 'beyza' ? 'user1' : 'user2',
+                name: userName,
+                avatar: userName.charAt(0).toUpperCase()
+            };
+            
+            usernameElement.textContent = currentUser.name;
+            userAvatarElement.textContent = currentUser.avatar;
+            
+            // Yeni kullanıcının adreslerini yükle
+            addresses = JSON.parse(localStorage.getItem(`userAddresses_${currentUser.id}`)) || [];
+            loadAddresses();
+        }
+
+        // Demo amaçlı kullanıcı değiştirme butonları (gerçek uygulamada olmaz)
+        document.addEventListener('DOMContentLoaded', function() {
+            const demoControls = document.createElement('div');
+            demoControls.style.position = 'fixed';
+            demoControls.style.bottom = '20px';
+            demoControls.style.right = '20px';
+            demoControls.style.zIndex = '1000';
+            demoControls.style.display = 'flex';
+            demoControls.style.gap = '10px';
+            
+            demoControls.innerHTML = `
+                <button style="padding: 8px 12px; background: #E55D0F; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="changeUser('Beyza')">Beyza</button>
+                <button style="padding: 8px 12px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="changeUser('Halit')">Halit</button>
+            `;
+            
+            document.body.appendChild(demoControls);
+        });
+    </script>
+</body>
+</html>

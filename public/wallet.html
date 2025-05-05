@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EatFeed - Digital Wallet</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>EatFeed</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="wallet.html" class="active">Wallet</a></li>
+                <li><a href="sepet.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a></li>
+            </ul>
+            <div class="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="wallet-section">
+            <div class="wallet-container">
+                <div class="wallet-card">
+                    <div class="wallet-header">
+                        <h2>Digital Wallet</h2>
+                        <div class="wallet-balance">
+                            <span class="currency">₺</span>
+                            <span id="balance">0.00</span>
+                        </div>
+                    </div>
+                    <div class="wallet-body">
+                        <div class="wallet-info">
+                            <p>Load money to your wallet to use for payments across EatFeed.</p>
+                        </div>
+                        <div class="wallet-form">
+                            <h3>Load Money</h3>
+                            <div class="amount-options">
+                                <button class="amount-btn" data-amount="50">₺50</button>
+                                <button class="amount-btn" data-amount="100">₺100</button>
+                                <button class="amount-btn" data-amount="200">₺200</button>
+                                <button class="amount-btn" data-amount="500">₺500</button>
+                            </div>
+                            <div class="custom-amount">
+                                <label for="custom-amount">Custom Amount (₺)</label>
+                                <input type="number" id="custom-amount" min="10" step="10" placeholder="Enter amount">
+                            </div>
+                            <div class="payment-methods">
+                                <h4>Payment Method</h4>
+                                <div class="payment-options">
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment-method" value="credit-card" checked>
+                                        <span class="option-label"><i class="fas fa-credit-card"></i> Credit Card</span>
+                                    </label>
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment-method" value="bank-transfer">
+                                        <span class="option-label"><i class="fas fa-university"></i> Bank Transfer</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button id="load-wallet-btn" class="btn btn-primary">Load Money</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="transaction-history">
+                    <h3>Transaction History</h3>
+                    <div class="transaction-list" id="transaction-list">
+                        <!-- Transactions will be loaded dynamically -->
+                        <div class="no-transactions">No transactions yet</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>EatFeed</h2>
+                <p>Digital Food Ordering System</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="wallet.html">Wallet</a></li>
+                    <li><a href="sepet.html">Cart</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> info@eatfeed.com</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 EatFeed. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i id="notification-icon" class="fas"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <script src="backend/js/wallet.js"></script>
+</body>
+</html>

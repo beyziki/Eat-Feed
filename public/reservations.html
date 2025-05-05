@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reservations | EatFeed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #121212;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #333;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .back-button {
+      background-color: #ff3c00;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .svg-wrapper {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 80vh;
+    }
+
+    svg {
+      border: 2px solid #ff3c00;
+      background-color: #1e1e1e;
+      width: 90%;
+      height: 100%;
+      max-width: 900px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #ff3c00;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .reserved { fill: rgb(239, 14, 14); cursor: not-allowed; }
+    .available { fill: rgb(14, 211, 14); cursor: pointer; }
+
+    /* Form alanı */
+    #reservationForm {
+    background-color: #e56d0a;
+    border: 2px solid #fb9b02;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 350px;
+    margin: 20px auto;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+  }
+
+  #reservationForm label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  #reservationForm input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #392d2d;
+  }
+
+  #reservationForm button {
+    width: 100%;
+    padding: 10px;
+    background-color: #080808;
+    border: none;
+    border-radius: 6px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #reservationForm button:hover {
+    background-color: #e66400;
+  }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">EatFeed</div>
+    <button class="back-button" onclick="window.history.back();">
+      <i class="fas fa-arrow-left"></i> Geri
+    </button>
+  </header>
+
+  <div class="main-content">
+    <h1>Lokanta Masa Rezervasyonu</h1>
+    <div class="svg-wrapper">
+      <svg id="floorPlan"></svg>
+    </div>
+  </div>
+
+  <form id="reservationForm">
+    <input type="hidden" id="selectedTableId" name="table_id" />
+  
+    <label for="name">Ad Soyad:</label>
+    <input type="text" id="name" name="name" required />
+  
+    <label for="guest_count">Kişi Sayısı:</label>
+    <input type="number" id="guest_count" name="guest_count" min="1" required />
+  
+    <label for="datetime">Rezervasyon Tarihi & Saati:</label>
+    <input type="datetime-local" id="datetime" name="datetime" required />
+    <span id="dateError" style="color:red;"></span>
+
+    <script>
+      document.querySelector("form").addEventListener("submit", function (e) {
+        const dateInput = document.getElementById("reservationDate").value;
+        const selectedDate = new Date(dateInput);
+        const today = new Date();
+    
+        // Bugünün tarihinden önceyse veya geçersizse işlemi durdur
+        if (!dateInput || selectedDate < today.setHours(0, 0, 0, 0)) {
+          e.preventDefault(); // Form gönderimini durdur
+          document.getElementById("dateError").textContent =
+            "Geçerli bir tarih giriniz (bugünden sonraki bir tarih).";
+        } else {
+          document.getElementById("dateError").textContent = "";
+        }
+      });
+    </script>
+  
+    <button type="submit">Rezervasyonu Tamamla</button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>
