@@ -89,57 +89,64 @@
 
     <script>
         let sepet = JSON.parse(localStorage.getItem("sepet")) || [];
-    
+      
         function guncelleSepetGorunumu() {
-  document.getElementById("sepet-adet").textContent = `(${sepet.length})`;
-}
-
-function sepeteEkle(isim, fiyat) {
-  sepet.push({ isim, fiyat });
-  localStorage.setItem("sepet", JSON.stringify(sepet)); // Burada kaydedelim
-  guncelleSepetGorunumu();
-}
-
-function sepeteCikar(isim) {
-  let index = sepet.findIndex(urun => urun.isim === isim);
-  if (index !== -1) {
-      sepet.splice(index, 1);
-      localStorage.setItem("sepet", JSON.stringify(sepet)); // Burada kaydedelim
-      guncelleSepetGorunumu();
-  }
-}
-
-    
+          const adetElem = document.getElementById("sepet-adet");
+          if (adetElem) {
+            adetElem.textContent = `(${sepet.length})`;
+          }
+        }
+      
+        function sepeteEkle(isim, fiyat) {
+          sepet.push({ isim, fiyat });
+          localStorage.setItem("sepet", JSON.stringify(sepet));
+          guncelleSepetGorunumu();
+        }
+      
+        function sepeteCikar(isim) {
+          const index = sepet.findIndex(urun => urun.isim === isim);
+          if (index !== -1) {
+            sepet.splice(index, 1);
+            localStorage.setItem("sepet", JSON.stringify(sepet));
+            guncelleSepetGorunumu();
+          }
+        }
+      
         const menuContainer = document.getElementById("menu-container");
-        document.addEventListener('DOMContentLoaded', function() {
-        // Yemekleri sunucudan çek
-        fetch('/api/yemekler')
-          .then(response => response.json())
-          .then(data => {
-            let kategoriHTML = `<div class="menu-kategori">
-                <h2>Menü</h2>
-                ${data.map(urun => `
+      
+        document.addEventListener("DOMContentLoaded", function () {
+          fetch("/menu")
+            .then(response => response.json())
+            .then(data => {
+              let kategoriHTML = `
+                <div class="menu-kategori">
+                  <h2>Menü</h2>
+                  ${data.map(urun => `
                     <div class="menu-item">
-                        <img src="resimler/${urun.yemek_resim}" alt="${urun.yemek_name}" style="width: 100px; height: 100px; object-fit: cover;">
-                        <div>
-                            <span>${urun.yemek_name}</span>
-                            <small>${urun.yemek_icecek || ""}</small>
-                        </div>
-                        <div>
-                            ${urun.yemek_fiyat} TL
-                            <button class="cart-button" onclick="sepeteEkle('${urun.yemek_name}', '${urun.yemek_fiyat}')">+</button>
-                            <button class="cart-button" onclick="sepeteCikar('${urun.yemek_name}')">-</button>
-                        </div>
+                      <img src="resimler/${urun.yemek_resim}" alt="${urun.yemek_name}" style="width: 100px; height: 100px; object-fit: cover;">
+                      <div>
+                        <strong>${urun.yemek_name}</strong><br>
+                        <small>Malzemeler: ${urun.malzemeler || "Yok"}</small>
+                      </div>
+                      <div>
+                        ${urun.yemek_fiyat} TL
+                        <button class="cart-button" onclick="sepeteEkle('${urun.yemek_name}', ${urun.yemek_fiyat})">+</button>
+                        <button class="cart-button" onclick="sepeteCikar('${urun.yemek_name}')">-</button>
+                      </div>
                     </div>
-                `).join("")}
-            </div>`;
-    
-            menuContainer.innerHTML = kategoriHTML;
-          })
-          .catch(error => console.error('Veri çekme hatası:', error));
+                  `).join("")}
+                </div>
+              `;
+      
+              if (menuContainer) {
+                menuContainer.innerHTML = kategoriHTML;
+              }
+            })
+            .catch(error => console.error("Veri çekme hatası:", error));
         });
+      
         guncelleSepetGorunumu();
-    </script>
-    
+      </script>
+      
 </body>
 </html>
