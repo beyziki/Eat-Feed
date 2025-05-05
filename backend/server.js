@@ -90,13 +90,19 @@ app.post('/add-menu', async (req, res) => {
 app.get('/menu', async (req, res) => {
   try {
     const [results] = await pool.execute(`
-      SELECT menu.id, menu.name, menu.category, menu.price, 
-             GROUP_CONCAT(ingredients.ingredient_name) AS ingredients
+      SELECT menu.id, menu.name AS yemek_name, menu.category AS yemek_kategori, menu.price AS yemek_fiyat, 
+             GROUP_CONCAT(ingredients.ingredient_name) AS malzemeler
       FROM menu
       LEFT JOIN ingredients ON menu.id = ingredients.menu_id
       GROUP BY menu.id
     `);
-    res.json(results);
+
+    const formatted = results.map(item => ({
+      ...item,
+      yemek_resim: ${item.yemek_name.toLowerCase().replace(/\s+/g, '_')}.jpg
+    }));
+
+    res.json(formatted);
   } catch (err) {
     console.error('Error fetching menu data:', err.message);
     return res.status(500).json({ 
@@ -105,6 +111,7 @@ app.get('/menu', async (req, res) => {
     });
   }
 });
+
 
 app.delete('/menu/:id', async (req, res) => {
   const { id } = req.params;
