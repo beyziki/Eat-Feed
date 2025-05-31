@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rezervasyonlar - Personel Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff7a00;
+      --primary-dark: #e06d00;
+      --dark: #121212;
+      --darker: #0a0a0a;
+      --light: #f5f5f5;
+      --gray: #2d2d2d;
+      --light-gray: #3d3d3d;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--dark);
+      color: var(--light);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--gray);
+    }
+    
+    h1 {
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0;
+      font-size: 28px;
+    }
+    
+    .refresh-btn {
+      background-color: var(--primary);
+      color: var(--darker);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .refresh-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 20px;
+      background-color: var(--darker);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray);
+    }
+    
+    th {
+      background-color: var(--primary);
+      color: var(--darker);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    tr:nth-child(even) {
+      background-color: var(--gray);
+    }
+    
+    tr:hover {
+      background-color: var(--light-gray);
+      transform: scale(1.01);
+      box-shadow: 0 2px 8px rgba(255, 122, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .status-active {
+      background-color: rgba(0, 200, 83, 0.2);
+      color: #00c853;
+    }
+    
+    .status-pending {
+      background-color: rgba(255, 171, 0, 0.2);
+      color: #ffab00;
+    }
+    
+    .status-canceled {
+      background-color: rgba(255, 45, 85, 0.2);
+      color: #ff2d55;
+    }
+    
+    @media (max-width: 768px) {
+      th, td {
+        padding: 12px 8px;
+        font-size: 14px;
+      }
+      
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📅 Gelen Rezervasyonlar</h1>
+      <button class="refresh-btn" onclick="fetchReservations()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+          <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+          <path d="M16 16h5v5"></path>
+        </svg>
+        Yenile
+      </button>
+    </header>
+
+    <table id="reservationsTable">
+      <thead>
+        <tr>
+          <th>Masa</th>
+          <th>Rezerve Eden</th>
+          <th>Kişi Sayısı</th>
+          <th>Rezervasyon Zamanı</th>
+          <th>Oluşturulma</th>
+          <th>Durum</th>
+        </tr>
+      </thead>
+      <tbody id="reservationsBody">
+        <!-- JavaScript ile doldurulacak -->
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 30px;">Yükleniyor...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    async function fetchReservations() {
+      try {
+        const tbody = document.getElementById('reservationsBody');
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px;">Yükleniyor...</td></tr>`;
+        
+        const response = await fetch('/all-reservations');
+        if (!response.ok) throw new Error('Sunucudan cevap alınamadı');
+
+        const data = await response.json();
+        tbody.innerHTML = "";
+
+        if (data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px;">Henüz rezervasyon bulunmamaktadır</td></tr>`;
+          return;
+        }
+
+        data.forEach(res => {
+          const tr = document.createElement('tr');
+          
+          // Rastgele durum üretme (demo amaçlı)
+          const statuses = ['active', 'pending', 'canceled'];
+          const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+          
+          tr.innerHTML = `
+            <td>${res.table_name || 'Bilgi Yok'}</td>
+            <td><strong>${res.reserved_by || 'Misafir'}</strong></td>
+            <td>${res.guest_count || '1'}</td>
+            <td>${res.reservation_time ? new Date(res.reservation_time).toLocaleString('tr-TR', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            }) : 'Belirtilmemiş'}</td>
+            <td>${res.created_at ? new Date(res.created_at).toLocaleString('tr-TR', {
+              day: 'numeric',
+              month: 'short',
+              hour: '2-digit',
+              minute: '2-digit'
+            }) : 'Bilgi Yok'}
+          `;
+          tbody.appendChild(tr);
+        });
+
+      } catch (error) {
+        console.error('Rezervasyonları çekerken hata oluştu:', error);
+        const tbody = document.getElementById('reservationsBody');
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px; color: #ff6b6b;">Hata oluştu: ${error.message}</td></tr>`;
+      }
+    }
+
+    // Sayfa yüklendiğinde verileri getir
+    window.onload = fetchReservations;
+    
+    // Her 30 saniyede bir otomatik yenileme
+    setInterval(fetchReservations, 30000);
+  </script>
+</body>
+</html>

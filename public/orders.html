@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siparişlerim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E55D0F;
+            --dark: #121212;
+            --darker: #0A0A0A;
+            --light: #F5F5F5;
+            --gray: #8D8D8D;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+            --info: #2196F3;
+            --card-bg: #1E1E1E;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-title i {
+            color: var(--primary);
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            color: var(--light);
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .orders-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .order-card {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .order-id {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .order-date {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .order-body {
+            padding: 1.25rem;
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 0.9375rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-delivered {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+
+        .status-cancelled {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--danger);
+        }
+
+        .status-preparing {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+
+        .order-items {
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+        }
+
+        .items-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .items-title i {
+            color: var(--primary);
+        }
+
+        .item-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .item-card {
+            display: flex;
+            background: var(--darker);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+        }
+
+        .item-details {
+            flex: 1;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .total-label {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .total-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            background: var(--card-bg);
+            color: var(--light);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            background: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Modal Stilleri */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(0);
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--darker);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-cancel {
+            background: var(--darker);
+            color: var(--light);
+        }
+
+        .btn-cancel:hover {
+            background: #333;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star.active {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+
+            .item-card {
+                flex-direction: column;
+            }
+
+            .item-image {
+                width: 100%;
+                height: 120px;
+            }
+            .item-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.8125rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255, 107, 53, 0.1);
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="orders-header">
+            <h1 class="page-title"><i class="fas fa-receipt"></i> Siparişlerim</h1>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-list"></i> Tümü
+                </button>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Siparişlerde ara..." id="orderSearch">
+        </div>
+
+        <div class="orders-list" id="ordersList">
+            <!-- Siparişler buraya yüklenecek -->
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Değerlendirme Modalı -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-star"></i> Ürün Değerlendirme</h3>
+            </div>
+            <form id="ratingForm">
+                <input type="hidden" id="ratingProductId">
+                <input type="hidden" id="ratingProductName">
+                <input type="hidden" id="ratingOrderId">
+
+                <div class="form-group">
+                    <label class="form-label">Puanınız:</label>
+                    <div class="stars" id="starRating">
+                        <i class="far fa-star star" data-rating="1"></i>
+                        <i class="far fa-star star" data-rating="2"></i>
+                        <i class="far fa-star star" data-rating="3"></i>
+                        <i class="far fa-star star" data-rating="4"></i>
+                        <i class="far fa-star star" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="ratingScore" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ratingComment" class="form-label">Yorumunuz:</label>
+                    <textarea id="ratingComment" class="form-control" placeholder="Ürün hakkındaki düşünceleriniz..." required></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" onclick="closeModal()">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Gönder
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let allOrders = [];
+        const userId = localStorage.getItem("userId");
+        let selectedRating = 0;
+
+        // Yıldız rating sistemi
+        document.getElementById('starRating').addEventListener('click', function(e) {
+            if (e.target.classList.contains('star')) {
+                const rating = parseInt(e.target.getAttribute('data-rating'));
+                selectedRating = rating;
+                document.getElementById('ratingScore').value = rating;
+                
+                const stars = this.querySelectorAll('.star');
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add('active');
+                        star.classList.remove('far');
+                        star.classList.add('fas');
+                    } else {
+                        star.classList.remove('active');
+                        star.classList.remove('fas');
+                        star.classList.add('far');
+                    }
+                });
+            }
+        });
+
+        async function loadOrders() {
+            try {
+                // Yükleme animasyonu ekleyebilirsiniz
+                document.getElementById('ordersList').innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
+                        <p style="margin-top: 1rem;">Siparişler yükleniyor...</p>
+                    </div>
+                `;
+
+                const response = await fetch(`/getRealOrders?userId=${userId}`);
+                const orders = await response.json();
+                allOrders = orders;
+                renderOrders(allOrders);
+            } catch (error) {
+                console.error("Siparişler yüklenemedi:", error);
+                document.getElementById("ordersList").innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle empty-icon"></i>
+                        <h3 class="empty-title">Bir hata oluştu</h3>
+                        <p class="empty-text">Sipariş bilgileri yüklenirken bir sorun oluştu. Lütfen daha sonra tekrar deneyin.</p>
+                        <button class="btn btn-primary" onclick="loadOrders()">
+                            <i class="fas fa-sync-alt"></i> Tekrar Dene
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Değiştirilen renderOrders fonksiyonu:
+        function renderOrders(orders) {
+            const container = document.getElementById("ordersList");
+            
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-box-open empty-icon"></i>
+                        <h3 class="empty-title">Henüz siparişiniz yok</h3>
+                        <p class="empty-text">Sipariş vermeye başladığınızda, burada sipariş geçmişinizi görebilirsiniz.</p>
+                        <a href="/menu" class="btn btn-primary">
+                            <i class="fas fa-utensils"></i> Menüye Gözat
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = orders.map(order => `
+                <div class="order-card" data-status="${order.status.toLowerCase()}">
+                    <div class="order-header">
+                        <div class="order-id">Sipariş #${order.id}</div>
+                        <div class="order-date">${formatDate(order.date)}</div>
+                    </div>
+                    
+                    <div class="order-body">
+                        <div class="order-info">
+                            <div class="info-item">
+                                <span class="info-label">Durum</span>
+                                <span class="status-badge status-${order.status.toLowerCase()}">
+                                    ${getStatusText(order.status)}
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Şehir</span>
+                                <span class="info-value">${order.city}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">İlçe</span>
+                                <span class="info-value">${order.district}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-items">
+                            <h4 class="items-title"><i class="fas fa-list-ul"></i> Sipariş İçeriği</h4>
+                            <div class="item-list">
+                                ${order.items.map(item => `
+                                    <div class="item-card">
+                                        <div class="item-image">
+                                            <i class="fas fa-hamburger"></i>
+                                        </div>
+                                        <div class="item-details">
+                                            <div class="item-name">${item.product_name}</div>
+                                            <div class="item-meta">
+                                                <span>${item.quantity} Adet</span>
+                                                <span class="item-price">${item.price} TL</span>
+                                            </div>
+                                            ${['delivered', 'completed', 'complate'].includes(order.status.toLowerCase()) ? `
+
+                                                <div class="item-actions">
+                                                    <button class="btn-outline" 
+                                                            onclick="openRatingModal('${item.product_id}', '${escapeString(item.product_name)}', '${order.id}')">
+                                                        <i class="fas fa-star"></i> Değerlendir
+                                                    </button>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="order-total">
+                            <div class="total-label">Toplam Tutar:</div>
+                            <div class="total-value">${calculateTotal(order.items)} TL</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Yeni eklenen yardımcı fonksiyon
+        function escapeString(str) {
+            return str.replace(/'/g, "\\'");
+        }
+
+        // Diğer fonksiyonlar aynen kalıyor...
+        
+        // Modal açma fonksiyonunda küçük bir düzeltme
+        function openRatingModal(productId, productName, orderId) {
+            document.getElementById("ratingProductId").value = productId;
+            document.getElementById("ratingProductName").value = productName;
+            document.getElementById("ratingOrderId").value = orderId;
+            document.getElementById("ratingScore").value = '';
+            document.getElementById("ratingComment").value = '';
+            // Değiştirilen renderOrders fonksiyonu:
+     function renderOrders(orders) {
+    const container = document.getElementById("ordersList");
+    
+    if (orders.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-box-open empty-icon"></i>
+                <h3 class="empty-title">Henüz siparişiniz yok</h3>
+                <p class="empty-text">Sipariş vermeye başladığınızda, burada sipariş geçmişinizi görebilirsiniz.</p>
+                <a href="/menu" class="btn btn-primary">
+                    <i class="fas fa-utensils"></i> Menüye Gözat
+                </a>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = orders.map(order => `
+        <div class="order-card" data-status="${order.status}">
+            <div class="order-header">
+                <div class="order-id">Sipariş #${order.id}</div>
+                <div class="order-date">${formatDate(order.date)}</div>
+            </div>
+            
+            <div class="order-body">
+                <div class="order-info">
+                    <div class="info-item">
+                        <span class="info-label">Durum:</span>
+                        <span class="status-badge status-${order.status.toLowerCase()}">
+                            ${getStatusText(order.status)}
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Şehir:</span>
+                        <span class="info-value">${order.city}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">İlçe:</span>
+                        <span class="info-value">${order.district}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Teslimat Adresi:</span>
+                        <span class="info-value">${order.address || 'Belirtilmemiş'}</span>
+                    </div>
+                </div>
+                
+                <div class="order-items">
+                    <h4 class="items-title"><i class="fas fa-list-ul"></i> Sipariş İçeriği</h4>
+                    <div class="item-list">
+                        ${order.items.map(item => `
+                            <div class="item-card">
+                                <div class="item-image">
+                                    <i class="fas fa-hamburger"></i>
+                                </div>
+                                <div class="item-details">
+                                    <div class="item-name">${item.product_name}</div>
+                                    <div class="item-meta">
+                                        <span>${item.quantity} Adet</span>
+                                        <span class="item-price">${item.price} TL</span>
+                                    </div>
+                                    ${['delivered', 'completed'].includes(order.status.toLowerCase()) ? `
+                                        <div class="item-actions">
+                                            <button class="btn btn-outline" 
+                                                    onclick="openRatingModal('${item.product_id}', '${item.product_name}', '${order.id}')">
+                                                <i class="fas fa-star"></i> Değerlendir
+                                            </button>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="order-total">
+                    <div class="total-label">Toplam Tutar:</div>
+                    <div class="total-value">${calculateTotal(order.items)} TL</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+
+        // Yeni eklenen yardımcı fonksiyon
+        function escapeString(str) {
+            return str.replace(/'/g, "\\'");
+        }
+
+        // Diğer fonksiyonlar aynen kalıyor...
+        
+        // Modal açma fonksiyonunda küçük bir düzeltme
+        function openRatingModal(productId, productName, orderId) {
+            document.getElementById("ratingProductId").value = productId;
+            document.getElementById("ratingProductName").value = productName;
+            document.getElementById("ratingOrderId").value = orderId;
+            document.getElementById("ratingScore").value = '';
+            document.getElementById("ratingComment").value = '';
+            
+            // Yıldızları sıfırla
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.classList.remove('active', 'fas');
+                star.classList.add('far');
+            });
+            selectedRating = 0;
+            
+            document.getElementById("ratingModal").style.display = "flex";
+        }
+            // Yıldızları sıfırla
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.classList.remove('active', 'fas');
+                star.classList.add('far');
+            });
+            selectedRating = 0;
+            
+            document.getElementById("ratingModal").style.display = "flex";
+        }
+        function formatDate(dateString) {
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString('tr-TR', options);
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'COMPLATED': 'Teslim Edildi',
+                'PENDING': 'Beklemede',
+                'PREPARING': 'Hazırlanıyor',
+                'CANCELLED': 'İptal Edildi'
+            };
+            return statusMap[status] || status;
+        }
+
+        function calculateTotal(items) {
+            return items.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+        }
+
+        function openRatingModal(productId, productName, orderId) {
+            document.getElementById("ratingProductId").value = productId;
+            document.getElementById("ratingProductName").value = productName;
+            document.getElementById("ratingOrderId").value = orderId;
+            document.getElementById("ratingScore").value = '';
+            document.getElementById("ratingComment").value = '';
+            
+            // Yıldızları sıfırla
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.classList.remove('active', 'fas');
+                star.classList.add('far');
+            });
+            selectedRating = 0;
+            
+            document.getElementById("ratingModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("ratingModal").style.display = "none";
+        }
+
+        document.getElementById("ratingForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const submitButton = this.querySelector("button[type='submit']");
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+
+            const productId = document.getElementById("ratingProductId").value;
+            const productName = document.getElementById("ratingProductName").value;
+            const orderId = document.getElementById("ratingOrderId").value;
+            const rating = document.getElementById("ratingScore").value;
+            const comment = document.getElementById("ratingComment").value;
+
+            if (!rating || rating < 1 || rating > 5) {
+                alert('Lütfen 1-5 arasında puan veriniz.');
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Gönder';
+                return;
+            }
+
+            try {
+                const response = await fetch("/submitRating", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        username: localStorage.getItem("username"),
+                        product_id: productId,
+                        product_name: productName,
+                        rating,
+                        comment,
+                        order_id: orderId
+                    })
+                });
+
+                const result = await response.json();
+
+                console.log("Sunucudan Gelen Yanıt:", result);  // Yanıtı burada kontrol edin
+
+
+                if (response.ok && result.success) {
+                    showAlert('success', 
+                    'Başarılı', result.message || 'Değerlendirmeniz başarıyla gönderildi!');
+                    closeModal();
+                } else {
+                    showAlert('error', 'Hata', result.message || 'Değerlendirme gönderilemedi.');
+                }
+            } catch (err) {
+                console.error("Sunucu hatası:", err);
+                showAlert('error', 'Hata', 'Sunucu hatası oluştu. Lütfen daha sonra tekrar deneyin.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Gönder';
+            }
+        });
+
+        function showAlert(type, title, message) {
+            // Basit bir alert fonksiyonu, daha gelişmiş bir modal ile değiştirilebilir
+            alert(`${title}: ${message}`);
+        }
+
+        // Sayfa yüklendiğinde siparişleri getir
+        document.addEventListener("DOMContentLoaded", function() {
+            loadOrders();
+            
+            // Filtre butonlarına tıklama olayı ekle
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    if (filter === 'all') {
+                        renderOrders(allOrders);
+                    } else {
+                        const filtered = allOrders.filter(order => 
+                            order.status.toLowerCase() === filter.toUpperCase()
+                        );
+                        renderOrders(filtered);
+                    }
+                });
+            });
+            
+            // Arama kutusu için dinleyici ekle
+            document.getElementById('orderSearch').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                if (searchTerm.length > 2) {
+                    const filtered = allOrders.filter(order => 
+                        order.id.toString().includes(searchTerm) || 
+                        order.items.some(item => 
+                            item.product_name.toLowerCase().includes(searchTerm)
+                        )
+                    );
+                    renderOrders(filtered);
+                } else if (e.target.value === '') {
+                    renderOrders(allOrders);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

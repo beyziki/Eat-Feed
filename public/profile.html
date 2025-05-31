@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <title>Profilim</title>
+  <style>
+    :root {
+      --primary: #FF6F00;
+      --primary-dark: #E65100;
+      --dark: #121212;
+      --darker: #0A0A0A;
+      --light: #f5f5f5;
+      --gray: #2D2D2D;
+      --light-gray: #424242;
+    }
+
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--dark);
+      color: var(--light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255, 111, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 111, 0, 0.1) 0%, transparent 50%);
+    }
+
+    .profile-container {
+      width: 100%;
+      max-width: 700px;
+      background-color: var(--darker);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), #FFAB40);
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    h3 {
+      color: var(--primary);
+      margin: 25px 0 15px;
+      font-size: 1.3rem;
+    }
+
+    .profile-info {
+      margin-top: 20px;
+    }
+
+    .info-row {
+      font-size: 1.1rem;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--gray);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .info-row:hover {
+      background: rgba(255, 255, 255, 0.02);
+      transform: translateX(5px);
+    }
+
+    .info-label {
+      color: var(--primary);
+      font-weight: 500;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-label i {
+      width: 20px;
+      text-align: center;
+    }
+
+    .info-value {
+      flex: 1;
+      text-align: right;
+      color: #eee;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      outline: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 6px 20px rgba(255, 111, 0, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 111, 0, 0.1);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    input.info-value {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--gray);
+      background-color: var(--dark);
+      color: var(--light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input.info-value:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 111, 0, 0.2);
+    }
+
+    #editForm {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .change-password-section {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid var(--gray);
+    }
+
+    .avatar-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #FFAB40);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+      font-weight: 600;
+      box-shadow: 0 5px 20px rgba(255, 111, 0, 0.4);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        padding: 25px;
+      }
+      
+      h2 {
+        font-size: 2rem;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+
+    /* Notification style */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      transform: translateX(150%);
+      transition: transform 0.4s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-container">
+    <div class="avatar-container">
+      <div class="avatar" id="userAvatar">JD</div>
+    </div>
+    
+    <h2>Profil Bilgileri</h2>
+    
+    <div class="profile-info" id="userinfo">
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-user"></i>Ad:</span>
+        <span class="info-value" id="name">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-user"></i>Soyad:</span>
+        <span class="info-value" id="surname">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-envelope"></i>E-posta:</span>
+        <span class="info-value" id="email">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-phone"></i>Telefon:</span>
+        <span class="info-value" id="phone">-</span>
+      </div>
+      
+      <div class="button-group">
+        <button class="btn btn-primary" onclick="enableEdit()">
+          <i class="fas fa-edit"></i> Bilgileri Güncelle
+        </button>
+        <button class="btn btn-secondary" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+        </button>
+      </div>
+
+      <div id="editForm">
+        <h3>Bilgileri Düzenle</h3>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-user"></i>Ad:</span>
+          <input type="text" id="edit-name" class="info-value" />
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-user"></i>Soyad:</span>
+          <input type="text" id="edit-surname" class="info-value" />
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-envelope"></i>E-posta:</span>
+          <input type="email" id="edit-email" class="info-value" />
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-phone"></i>Telefon:</span>
+          <input type="text" id="edit-phone" class="info-value" />
+        </div>
+        
+        <div class="change-password-section">
+          <h3><i class="fas fa-lock"></i> Şifre Değiştir</h3>
+          <div class="info-row">
+            <label for="old-password" class="info-label"><i class="fas fa-key"></i>Eski Şifre:</label>
+            <input type="password" id="old-password" class="info-value" placeholder="••••••••" />
+          </div>
+          <div class="info-row">
+            <label for="new-password" class="info-label"><i class="fas fa-key"></i>Yeni Şifre:</label>
+            <input type="password" id="new-password" class="info-value" placeholder="••••••••" />
+          </div>
+          <div class="info-row">
+            <label for="confirm-password" class="info-label"><i class="fas fa-key"></i>Yeni Şifre (Tekrar):</label>
+            <input type="password" id="confirm-password" class="info-value" placeholder="••••••••" />
+          </div>
+        </div>
+        
+        <div class="button-group">
+          <button class="btn btn-primary" onclick="saveChanges()">
+            <i class="fas fa-save"></i> Değişiklikleri Kaydet
+          </button>
+          <button class="btn btn-secondary" onclick="cancelEdit()">
+            <i class="fas fa-times"></i> İptal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notificationText">İşlem başarılı!</span>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    let currentUserData = {};
+
+    if (!token || !userId) {
+      window.location.href = "login.html";
+    }
+
+    // Kullanıcı bilgilerini yükle
+    function loadUserData() {
+      fetch(`/api/userinfo/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Sunucudan geçerli yanıt alınamadı");
+        return res.json();
+      })
+      .then(data => {
+        if (data.success && data.user) {
+          const user = data.user;
+          currentUserData = user;
+          
+          // Bilgileri ekrana yaz
+          document.getElementById('name').textContent = user.name || "-";
+          document.getElementById('surname').textContent = user.surname || "-";
+          document.getElementById('email').textContent = user.email || "-";
+          document.getElementById('phone').textContent = user.phone || "-";
+          
+          // Avatar oluştur
+          const initials = (user.name? user.name.charAt(0) : '') + (user.surname? user.surname.charAt(0) : '');
+          document.getElementById('userAvatar').textContent = initials || "?";
+        } else {
+          showNotification("Kullanıcı bilgisi alınamadı", false);
+        }
+      })
+      .catch(err => {
+        console.error("Bilgi çekme hatası:", err);
+        showNotification("Sunucuyla iletişimde bir sorun oluştu", false);
+      });
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      window.location.href = "login.html";
+    }
+
+    function enableEdit() {
+      document.getElementById('editForm').style.display = 'block';
+      
+      // Mevcut verileri inputlara yerleştir
+      document.getElementById('edit-name').value = currentUserData.name || '';
+      document.getElementById('edit-surname').value = currentUserData.surname || '';
+      document.getElementById('edit-email').value = currentUserData.email || '';
+      document.getElementById('edit-phone').value = currentUserData.phone || '';
+      
+      // Sayfayı düzenleme moduna kaydır
+      document.getElementById('editForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelEdit() {
+      document.getElementById('editForm').style.display = 'none';
+    }
+
+    function saveChanges() {
+      const updatedData = {
+        name: document.getElementById('edit-name').value.trim(),
+        surname: document.getElementById('edit-surname').value.trim(),
+        email: document.getElementById('edit-email').value.trim(),
+        phone: document.getElementById('edit-phone').value.trim(),
+      };
+
+      // Şifre değişikliği kontrolü
+      const oldPass = document.getElementById('old-password').value.trim();
+      const newPass = document.getElementById('new-password').value.trim();
+      const confirmPass = document.getElementById('confirm-password').value.trim();
+      
+      if (newPass && newPass !== confirmPass) {
+        showNotification("Yeni şifreler uyuşmuyor", false);
+        return;
+      }
+
+      if (newPass) {
+        updatedData.oldPassword = oldPass;
+        updatedData.newPassword = newPass;
+      }
+
+      fetch(`/api/userinfo/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(updatedData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showNotification("Bilgiler başarıyla güncellendi");
+          loadUserData();
+          document.getElementById('editForm').style.display = 'none';
+          // Şifre alanlarını temizle
+          document.getElementById('old-password').value = '';
+          document.getElementById('new-password').value = '';
+          document.getElementById('confirm-password').value = '';
+        } else {
+          showNotification("Güncelleme başarısız: " + (data.message || "Bilinmeyen hata"), false);
+        }
+      })
+      .catch(err => {
+        console.error("Güncelleme hatası:", err);
+        showNotification("Sunucu hatası oluştu", false);
+      });
+    }
+
+    function showNotification(message, isSuccess = true) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notificationText');
+      
+      notificationText.textContent = message;
+      notification.style.background = isSuccess ? 'var(--primary)' : '#e53935';
+      notification.querySelector('i').className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+      
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    // Sayfa yüklendiğinde kullanıcı verilerini getir
+    document.addEventListener('DOMContentLoaded', loadUserData);
+  </script>
+</body>
+</html>

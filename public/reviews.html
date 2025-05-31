@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kullanıcı Yorumları</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-light: #4895ef;
+      --secondary-color: #3f37c9;
+      --accent-color: #f72585;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --gray-dark: #6c757d;
+      --gray-light: #e9ecef;
+      --success-color: #4cc9f0;
+      --warning-color: #f8961e;
+      --danger-color: #ef233c;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8fafc;
+      color: var(--dark-color);
+      line-height: 1.7;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      border-radius: 2px;
+    }
+    
+    .section-subtitle {
+      color: var(--gray-dark);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    #reviews-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    
+    .review-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+    
+    .review-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(67, 97, 238, 0.15);
+    }
+    
+    .review-card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    }
+    
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin-right: 15px;
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    }
+    
+    .user-details {
+      flex: 1;
+    }
+    
+    .username {
+      font-weight: 600;
+      color: var(--dark-color);
+      font-size: 1.1rem;
+    }
+    
+    .product-name {
+      color: var(--primary-color);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 3px;
+    }
+    
+    .rating {
+      display: flex;
+      align-items: center;
+      background: rgba(248, 150, 30, 0.1);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      color: var(--warning-color);
+    }
+    
+    .rating i {
+      margin-right: 5px;
+      font-size: 0.9rem;
+    }
+    
+    .comment {
+      margin: 20px 0;
+      color: #495057;
+      line-height: 1.8;
+      font-size: 0.95rem;
+      position: relative;
+      padding-left: 20px;
+    }
+    
+    .comment:before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 3rem;
+      color: var(--gray-light);
+      font-family: serif;
+      line-height: 1;
+    }
+    
+    .review-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 25px;
+      font-size: 0.85rem;
+      color: var(--gray-dark);
+      border-top: 1px dashed var(--gray-light);
+      padding-top: 15px;
+    }
+    
+    .date {
+      display: flex;
+      align-items: center;
+    }
+    
+    .date i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+    
+    .actions {
+      display: flex;
+    }
+    
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--gray-dark);
+      margin-left: 15px;
+      cursor: pointer;
+      transition: color 0.2s;
+      font-size: 0.9rem;
+    }
+    
+    .action-btn:hover {
+      color: var(--primary-color);
+    }
+    
+    .action-btn i {
+      margin-right: 5px;
+    }
+    
+    .no-reviews {
+      text-align: center;
+      grid-column: 1 / -1;
+      padding: 60px 20px;
+      color: var(--gray-dark);
+    }
+    
+    .no-reviews i {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: var(--gray-light);
+    }
+    
+    .no-reviews h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: var(--dark-color);
+    }
+    
+    .error-message {
+      color: var(--danger-color);
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      #reviews-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .review-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Müşteri Yorumları</h2>
+      <p class="section-subtitle">Değerli müşterilerimizin deneyimlerini ve geri bildirimlerini okuyun</p>
+    </div>
+    
+    <div id="reviews-container">
+      <!-- Yorumlar burada gösterilecek -->
+    </div>
+  </div>
+
+  <script>
+    // API'den yorumları çek
+    fetch('/api/reviews')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('reviews-container');
+        
+        if (data.length === 0) {
+          container.innerHTML = `
+            <div class="no-reviews">
+              <i class="fas fa-comment-slash"></i>
+              <h3>Henüz yorum yok</h3>
+              <p>Bu ürün için henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+            </div>
+          `;
+          return;
+        }
+        
+        data.forEach(review => {
+          const div = document.createElement('div');
+          div.className = 'review-card';
+          
+          // Kullanıcı avatarı için baş harfler
+          const names = review.username.split(' ');
+          const initials = (names[0][0] + (names[1] ? names[1][0] : '')).toUpperCase();
+          
+          // Yıldız rating
+          const stars = Array(5).fill('<i class="far fa-star"></i>');
+          for (let i = 0; i < review.rating; i++) {
+            stars[i] = '<i class="fas fa-star"></i>';
+          }
+          
+          div.innerHTML = `
+            <div class="review-header">
+              <div class="user-info">
+                <div class="user-avatar">${initials}</div>
+                <div class="user-details">
+                  <div class="username">${review.username}</div>
+                  <div class="product-name">${review.product_name}</div>
+                </div>
+              </div>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                ${review.rating.toFixed(1)}
+              </div>
+            </div>
+            <div class="comment">${review.comment}</div>
+            <div class="review-footer">
+              <div class="date">
+                <i class="far fa-calendar-alt"></i>
+                ${new Date(review.created_at).toLocaleDateString('tr-TR', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </div>
+              <div class="actions">
+                <button class="action-btn"><i class="far fa-thumbs-up"></i> Beğen</button>
+                <button class="action-btn"><i class="far fa-comment-dots"></i> Yanıtla</button>
+              </div>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        const container = document.getElementById('reviews-container');
+        container.innerHTML = `
+          <div class="no-reviews">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Yorumlar yüklenemedi</h3>
+            <p>Yorumları getirirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
+            <div class="error-message">Hata: ${err.message}</div>
+          </div>
+        `;
+        console.error('Yorumları alırken hata oluştu:', err);
+      });
+  </script>
+</body>
+</html>

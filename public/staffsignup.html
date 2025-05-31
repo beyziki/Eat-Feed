@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heyooo Restaurant - Staff Signup</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f6f6f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 400px;
+      padding: 40px;
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .logo span {
+      color: #ffcc00;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 16px;
+      background-color: #fff;
+    }
+
+    .input-container i {
+      margin-right: 12px;
+      color: #555;
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .input-container input, select {
+      border: none;
+      outline: none;
+      font-size: 15px;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 24px;
+      border: none;
+      background-color: #ffcc00;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .login-button:hover {
+      background-color: #e6b800;
+    }
+
+    .signup-link {
+      font-size: 14px;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: #ff9900;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .eye-icon {
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">EAT <span>FEED</span></div>
+    <div style="text-align: center;">HEYOOO RESTAURANT</div>
+
+    <!-- 🔧 FORM BAŞLADI -->
+    <form id="staffSignupForm">
+      <div class="input-container">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" id="name" placeholder="Name" required />
+      </div>
+
+      <div class="input-container">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" id="surname" placeholder="Surname" required />
+      </div>
+
+      <div class="input-container">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="email" placeholder="Email" required />
+      </div>
+
+      <div class="input-container">
+        <i class="fa-solid fa-phone"></i>
+        <input type="tel" id="phone" placeholder="+90 5XX XXX XX XX" value="+90" required />
+      </div>
+
+      <div class="input-container">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" required />
+        <i class="fa-solid fa-eye eye-icon" onclick="togglePasswordVisibility('password')"></i>
+      </div>
+
+      <div class="input-container">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+        <i class="fa-solid fa-eye eye-icon" onclick="togglePasswordVisibility('confirmPassword')"></i>
+      </div>
+
+      <div class="input-container">
+        <i class="fa-solid fa-user-tag"></i>
+        <select id="userType" required>
+          <option value="" disabled selected>Select Role</option>
+          <option value="staff">Staff</option>
+          <option value="manager">Manager</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <button class="login-button" type="submit">Sign Up</button>
+    </form>
+    <!-- 🔧 FORM BİTTİ -->
+
+    <div class="signup-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    function togglePasswordVisibility(fieldId) {
+      const field = document.getElementById(fieldId);
+      field.type = field.type === "password" ? "text" : "password";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("staffSignupForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const surname = document.getElementById("surname").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const confirmPassword = document.getElementById("confirmPassword").value.trim();
+        const role = document.getElementById("userType").value;
+
+        if (password !== confirmPassword) {
+          alert("Şifreler uyuşmuyor!");
+          return;
+        }
+
+        if (!name || !surname || !email || !phone || !password || !role) {
+          alert("Lütfen tüm alanları doldurun.");
+          return;
+        }
+
+        const full_name = name + " " + surname;
+
+        try {
+          const response = await fetch("/api/staff/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: email, password, full_name, role })
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            alert("Kayıt başarılı! ID: " + data.staffId);
+            form.reset();
+          } else {
+            alert("Hata: " + data.message);
+          }
+
+        } catch (err) {
+          console.error("Hata:", err);
+          alert("Sunucu hatası oluştu!");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

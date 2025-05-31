@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme Yap - Yemek Sipariş</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #E55D0F;
+            --secondary-color: #FF9500;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-gray: #b0b0b0;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --border-color: #444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #444;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .payment-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .order-summary {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .summary-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .total-row {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .payment-methods {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .payment-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 25px;
+            background: #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 12px;
+        }
+
+        .complete-payment {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .complete-payment:hover {
+            background: #d04a0d;
+            transform: translateY(-2px);
+        }
+
+        .payment-success {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        .success-message {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .order-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .back-to-home {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .back-to-home:hover {
+            background: #d04a0d;
+        }
+
+        @media (max-width: 768px) {
+            .payment-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .payment-form {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-error {
+            background: var(--danger);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>YemekSepeti</span>
+            </div>
+            <button class="back-btn" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i> Geri
+            </button>
+        </header>
+
+        <h1><i class="fas fa-credit-card"></i> Ödeme Yap</h1>
+
+        <div class="payment-container">
+            <div class="order-summary">
+                <h3 class="summary-title"><i class="fas fa-receipt"></i> Sipariş Özeti</h3>
+                <div class="summary-row">
+                    <span>Sipariş Toplamı:</span>
+                    <span id="orderSubtotal">0.00 TL</span>
+                </div>
+                <div class="summary-row">
+                    <span>Kargo Ücreti:</span>
+                    <span id="orderDelivery">9.90 TL</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Ödenecek Toplam:</span>
+                    <span id="orderTotal">0.00 TL</span>
+                </div>
+            </div>
+
+            <div class="payment-methods" id="paymentFormSection">
+                <div class="payment-tabs">
+                    <div class="tab active" data-tab="credit-card">
+                        <i class="fas fa-credit-card"></i> Kredi Kartı
+                    </div>
+                    <div class="tab" data-tab="paypal">
+                        <i class="fab fa-paypal"></i> PayPal
+                    </div>
+                    <div class="tab" data-tab="bank-transfer">
+                        <i class="fas fa-university"></i> Banka Havalesi
+                    </div>
+                </div>
+
+                <div class="tab-content active" id="credit-card">
+                    <form id="creditCardForm" class="payment-form">
+                        <div class="form-group full-width">
+                            <label for="cardNumber">Kart Numarası</label>
+                            <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+                            <div class="card-icons">
+                                <div class="card-icon"><i class="fab fa-cc-visa"></i></div>
+                                <div class="card-icon"><i class="fab fa-cc-mastercard"></i></div>
+                                <div class="card-icon"><i class="fab fa-cc-amex"></i></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="cardName">Kart Üzerindeki İsim</label>
+                            <input type="text" id="cardName" class="form-control" placeholder="Kart üzerinde yazan isim">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiryDate">Son Kullanma Tarihi</label>
+                                <input type="text" id="expiryDate" class="form-control" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" class="form-control" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="installment">Taksit Seçeneği</label>
+                            <select id="installment" class="form-control">
+                                <option value="1">Tek Çekim</option>
+                                <option value="2">2 Taksit</option>
+                                <option value="3">3 Taksit</option>
+                                <option value="6">6 Taksit</option>
+                                <option value="9">9 Taksit</option>
+                                <option value="12">12 Taksit</option>
+                            </select>
+                        </div>
+                        
+                        <button type="button" class="complete-payment" onclick="processPayment()">
+                            <i class="fas fa-lock"></i> ÖDEMEYİ TAMAMLA
+                        </button>
+                    </form>
+                </div>
+
+                <div class="tab-content" id="paypal">
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <i class="fab fa-paypal" style="font-size: 50px; color: #003087; margin-bottom: 20px;"></i>
+                        <p>PayPal ile ödeme yapmak için butona tıklayın. PayPal sayfasına yönlendirileceksiniz.</p>
+                        <button class="complete-payment" style="background: #003087; margin-top: 30px;">
+                            <i class="fab fa-paypal"></i> PayPal ile Öde
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="bank-transfer">
+                    <div style="padding: 20px;">
+                        <p style="margin-bottom: 15px;">Banka havalesi ile ödeme yapmak için aşağıdaki bilgileri kullanabilirsiniz:</p>
+                        
+                        <div style="background: #333; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                            <div style="margin-bottom: 10px;">
+                                <strong>Banka Adı:</strong> YemekSepeti Bank
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Şube Kodu:</strong> 1234
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Hesap No:</strong> 5678901234
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>IBAN:</strong> TR12 3456 7890 1234 5678 9012 34
+                            </div>
+                            <div>
+                                <strong>Açıklama:</strong> Sipariş No: <span id="orderReference"></span>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-bottom: 15px;">Ödemenizi yaptıktan sonra dekontu info@yemeksepeti.com adresine göndermeniz gerekmektedir.</p>
+                        
+                        <button class="complete-payment" style="background: #28a745;">
+                            <i class="fas fa-check-circle"></i> Ödemeyi Onayla
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-success" id="paymentSuccess">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="success-message">Ödemeniz Başarıyla Tamamlandı!</h2>
+                
+                <div class="order-details">
+                    <div class="order-number">Sipariş Numaranız: <span id="successOrderNumber"></span></div>
+                    <p>Siparişiniz alınmıştır. En kısa sürede hazırlanacaktır.</p>
+                    <p>Teşekkür ederiz, iyi günler dileriz.</p>
+                </div>
+                
+                <a href="index.html" class="back-to-home">
+                    <i class="fas fa-home"></i> Ana Sayfaya Dön
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="toastMessage">Lütfen tüm alanları doldurun</span>
+    </div>
+
+    <script>
+        // Get order details from URL or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const subtotal = urlParams.get('subtotal') || localStorage.getItem('orderSubtotal') || '0.00';
+        const total = urlParams.get('total') || localStorage.getItem('orderTotal') || '0.00';
+        const deliveryFee = 9.90;
+
+        // Generate random order number
+        function generateOrderNumber() {
+            return 'YS-' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+        }
+
+        // Initialize the page
+        document.addEventListener("DOMContentLoaded", function() {
+            // Set order summary values
+            document.getElementById('orderSubtotal').textContent = subtotal + ' TL';
+            document.getElementById('orderDelivery').textContent = deliveryFee.toFixed(2) + ' TL';
+            document.getElementById('orderTotal').textContent = total + ' TL';
+            
+            // Set order reference for bank transfer
+            const orderNumber = generateOrderNumber();
+            document.getElementById('orderReference').textContent = orderNumber;
+            document.getElementById('successOrderNumber').textContent = orderNumber;
+            
+            // Tab switching functionality
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and contents
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Format card number input
+            document.getElementById('cardNumber').addEventListener('input', function(e) {
+                let value = this.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let formatted = '';
+                
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formatted += ' ';
+                    }
+                    formatted += value[i];
+                }
+                
+                this.value = formatted;
+            });
+            
+            // Format expiry date input
+            document.getElementById('expiryDate').addEventListener('input', function(e) {
+                let value = this.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                
+                this.value = value;
+            });
+            
+            // Restrict CVV to numbers only
+            document.getElementById('cvv').addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/gi, '');
+            });
+        });
+
+        // Process payment
+        function processPayment() {
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+            const cardName = document.getElementById('cardName').value.trim();
+            const expiryDate = document.getElementById('expiryDate').value;
+            const cvv = document.getElementById('cvv').value;
+            
+            // Simple validation
+            if (!cardNumber || !cardName || !expiryDate || !cvv) {
+                showToast('Lütfen tüm alanları doldurun', 'error');
+                return;
+            }
+            
+            if (cardNumber.length !== 16) {
+                showToast('Geçersiz kart numarası', 'error');
+                return;
+            }
+            
+            if (expiryDate.length !== 5 || !expiryDate.includes('/')) {
+                showToast('Geçersiz son kullanma tarihi', 'error');
+                return;
+            }
+            
+            if (cvv.length !== 3) {
+                showToast('Geçersiz CVV numarası', 'error');
+                return;
+            }
+            
+            // In a real app, you would send this data to your payment processor
+            // For demo purposes, we'll simulate a successful payment
+            
+            // Show success message
+            document.getElementById('paymentFormSection').style.display = 'none';
+            document.getElementById('paymentSuccess').style.display = 'block';
+            
+            // Clear cart in localStorage
+            localStorage.removeItem('cart');
+            localStorage.removeItem('orderSubtotal');
+            localStorage.removeItem('orderTotal');
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'error') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = 'toast';
+            if (type === 'error') {
+                toast.classList.add('toast-error');
+                toast.querySelector('i').className = 'fas fa-exclamation-circle';
+            }
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

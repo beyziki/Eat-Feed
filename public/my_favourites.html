@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favourities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000; /* Siyah arka plan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .favourites-container {
+            width: 90%;
+            max-width: 400px;
+            background: #1a1a1a; /* Koyu gri kutu */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #fff; /* Beyaz başlık */
+            margin-bottom: 20px;
+        }
+
+        .fav-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #E55D0F; /* Turuncu butonlar */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .fav-btn:hover {
+            background: #c94d0d; /* Daha koyu turuncu */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="favourites-container">
+        <h2>My Favourities</h2>
+
+        <button class="fav-btn" onclick="window.location.href='favourite_chefs.html'">Favourite Chefs</button>
+        <button class="fav-btn" onclick="window.location.href='favourite_dishes.html'">Favourite Meals</button>
+        
+    </div>
+
+</body>
+</html>

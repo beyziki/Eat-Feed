@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Değerlendirme Sayfası</title>
+</head>
+<body>
+  <h2>Değerlendirme Yap</h2>
+  <form id="reviewForm">
+    <label for="rating">Puan (1-5):</label>
+    <select id="rating" name="rating" required>
+      <option value="">Seçiniz</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <br/><br/>
+
+    <label for="comment">Yorumunuz:</label><br/>
+    <textarea id="comment" name="comment" rows="5" cols="40" placeholder="Yorumunuzu yazınız..."></textarea>
+    <br/><br/>
+
+    <button type="submit">Gönder</button>
+  </form>
+
+  <script>
+    // URL'den orderId çekiyoruz
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('orderId');
+    const userId = localStorage.getItem('userId'); // Kullanıcı ID
+
+    document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const rating = document.getElementById('rating').value;
+      const comment = document.getElementById('comment').value;
+
+      if (!rating) {
+        alert('Lütfen puan seçiniz.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/submitReview', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ orderId, userId, rating, comment }),
+        });
+
+        if (response.ok) {
+          alert('Değerlendirmeniz başarıyla kaydedildi.');
+          window.location.href = '/'; // Ana sayfaya yönlendir
+        } else {
+          alert('Değerlendirme kaydedilirken hata oluştu.');
+        }
+      } catch (error) {
+        alert('Sunucuya bağlanırken hata oluştu.');
+      }
+    });
+  </script>
+</body>
+</html>

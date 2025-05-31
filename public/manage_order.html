@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Orders | EatFeed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #121212;
+      color: white;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #333;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .back-button {
+      background-color: #ff3c00;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+    }
+
+    .container {
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #ff3c00;
+      margin-bottom: 20px;
+    }
+
+    .filters {
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: #333;
+      color: white;
+    }
+
+    .filter-btn.active {
+      background-color: #ff3c00;
+    }
+
+    #orderSearch {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      margin-left: 20px;
+      width: 200px;
+    }
+
+    .order {
+      border: 1px solid #444;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .order img {
+      max-width: 200px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .order button {
+  background-color: #ff3c00;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.order button:hover {
+  background-color: #e63600;
+}
+
+
+    .pending { background-color: #ffc107; color: black; padding: 5px 10px; border-radius: 5px; display: inline-block; }
+    .completed { background-color: #28a745; color: white; padding: 5px 10px; border-radius: 5px; display: inline-block; }
+    .cancelled { background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 5px; display: inline-block; }
+
+    body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+header {
+  background-color: #1e1e1e;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.back-button {
+  background-color: #ff3c00;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 30px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #e63600;
+}
+
+.container {
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 32px;
+  color: #ff3c00;
+  margin-bottom: 20px;
+}
+
+.filters {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #2a2a2a;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background-color: #ff3c00;
+}
+
+#orderSearch {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: none;
+  width: 250px;
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.order {
+  border: 1px solid #2e2e2e;
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+
+.order:hover {
+  transform: scale(1.01);
+}
+
+.order h3 {
+  margin-top: 0;
+  color: #ff3c00;
+}
+
+.order ul {
+  padding-left: 20px;
+}
+
+.order li {
+  margin-bottom: 6px;
+}
+
+.order button {
+  background-color: #ff3c00;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.order button:hover {
+  background-color: #e63600;
+}
+
+.status-label {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+  text-transform: capitalize;
+  font-size: 0.9em;
+}
+
+.pending { background-color: #ffc107; color: #000; }
+.completed { background-color: #28a745; color: #fff; }
+.cancelled { background-color: #dc3545; color: #fff; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.order {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.1s;
+  transform: translateY(10px);
+}
+
+.filter-btn {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.filter-btn:hover {
+  transform: scale(1.05);
+}
+.order li {
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: fadeIn 0.4s forwards;
+  animation-delay: 0.3s;
+}
+.order button {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.order button:hover {
+  transform: scale(1.05);
+}
+.container {
+  animation: fadeIn 0.6s ease-in;
+}
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display: flex; align-items: center; gap: 20px;">
+    <button class="back-button" onclick="history.back()">⬅ Back</button>
+    <div class="logo">🍽 EatFeed - Manage Orders</div>
+  </div>
+</header>
+
+<div class="container">
+  <h1>Active Orders</h1>
+
+  <div class="filters">
+
+    <button class="filter-btn active" data-filter="all">Hepsi</button>
+    <input type="text" id="orderSearch" placeholder="Ürün / Şehir / İlçe ara...">
+  </div>
+
+
+  <div id="ordersList"></div>
+</div>
+
+<script>
+let allOrders = [];
+
+async function loadOrders() {
+  try {
+    const response = await fetch('/getRealOrders');
+    const orders = await response.json();
+
+    allOrders = orders.map(order => ({
+      ...order,
+      status: order.status || "pending"
+    }));
+
+    renderOrders(allOrders);
+  } catch (error) {
+    console.error("Siparişler yüklenemedi:", error);
+    document.getElementById("ordersList").innerHTML = "<p>Siparişler yüklenemedi.</p>";
+  }
+}
+
+function renderOrders(orders) {
+  const container = document.getElementById("ordersList");
+  container.innerHTML = "";
+
+  if (orders.length === 0) {
+    container.innerHTML = "<p>Henüz sipariş bulunmamaktadır.</p>";
+    return;
+  }
+
+  orders.forEach(order => {
+    const orderDiv = document.createElement("div");
+    orderDiv.className = "order";
+
+    const orderHeader = `
+      <h3>Sipariş No: ${order.id}</h3>
+      <p><strong>Kullanıcı:</strong> ${order.user_name} (${order.email})</p>
+      <p>Şehir: ${order.city}</p>
+      <p>İlçe: ${order.district}</p>
+      <p>Tarih: ${new Date(order.date).toLocaleString()}</p>
+      <p>Durum: <span class="${order.status}">${order.status}</span></p>
+    `;
+
+    let itemsHtml = "<ul>";
+    (order.items || []).forEach(item => {
+      itemsHtml += `
+        <li>
+          ${item.product_name} - ${item.quantity} adet - ${item.price}₺
+        </li>
+      `;
+    });
+    itemsHtml += "</ul>";
+
+    // Değerlendirme ve Teslim Edildi Butonları
+    const reviewButton = `<button onclick="goToReview(${order.id})">Değerlendir</button>`;
+    const deliveredButton = order.status !== "completed" ? 
+      `<button onclick="markAsDelivered(${order.id})">Teslim Edildi</button>` : 
+      `<span class="completed">Teslim Edildi</span>`;
+
+    orderDiv.innerHTML = orderHeader + itemsHtml + reviewButton + deliveredButton;
+    container.appendChild(orderDiv);
+  });
+}
+
+// Siparişi teslim edildi olarak işaretleme
+async function markAsDelivered(orderId) {
+  try {
+    const response = await fetch('/markAsDelivered', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ orderId })
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert("Sipariş teslim edildi olarak işaretlendi.");
+      loadOrders(); // Sipariş listesini yeniden yükle
+    } else {
+      alert(result.message || "Güncelleme başarısız.");
+    }
+  } catch (error) {
+    console.error("Sunucu hatası:", error);
+    alert("Sunucu hatası oluştu.");
+  }
+}
+
+
+function goToReview(orderId) {
+  window.location.href = `/review.html?orderId=${orderId}`;
+}
+
+
+document.addEventListener("DOMContentLoaded", loadOrders);
+</script>
+
+</body>
+</html>

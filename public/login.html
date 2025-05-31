@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | EatFeed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f6f6f6;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 400px;
+      padding: 40px;
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .highlight {
+      color: #ffcc00;
+    }
+
+    .button {
+      background-color: #ffcc00;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      margin: 10px 0;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background-color: #e6b800;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="title">EAT <span class="highlight">FEED</span></div>
+
+    <!-- Login Seçim Ekranı -->
+    <div class="button-container">
+      <button class="button" onclick="redirectToLogin('staff')">STAFF LOGIN</button>
+      <button class="button" onclick="redirectToLogin('user')">USER LOGIN</button>
+    </div>
+  </div>
+
+  <script>
+    function redirectToLogin(type) {
+      if (type === 'staff') {
+        window.location.href = 'stafflogin.html';
+      } else if (type === 'user') {
+        window.location.href = 'userlogin.html';
+      }
+    }
+  </script>
+
+</body>
+</html>

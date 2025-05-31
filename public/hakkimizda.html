@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #d4af37;
+            --secondary-color: #1a1a1a;
+            --accent-color: #333333;
+        }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0;
+            margin-bottom: 50px;
+        }
+        .staff-card {
+            background: var(--secondary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+        .staff-card:hover {
+            transform: translateY(-5px);
+        }
+        .staff-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+        .info-box {
+            background: var(--secondary-color);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .restaurant-img {
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary-color);
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        .highlight {
+            color: var(--primary-color);
+        }
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">Our Story</h1>
+            <p class="lead">Passion for food since 2005</p>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        <div class="row g-5">
+            <!-- Left Column: Staff -->
+            <div class="col-lg-7">
+                <h2 class="section-title fw-bold">Meet Our Team</h2>
+
+                <!-- Restaurant Owner -->
+                <div class="staff-card p-3 d-flex align-items-center">
+                    <img src="resimler/hoca.png" alt="Restaurant Owner" class="staff-img rounded-circle me-4">
+                    <div>
+                        <h3 class="highlight">Mehmet Gökhan Bakal</h3>
+                        <h5 class="text-muted mb-2">Restaurant Owner</h5>
+                        <p>An entrepreneur with 20 years of industry experience who founded our restaurant with his passion for food and commitment to quality service.</p>
+                    </div>
+                </div>
+
+                <!-- Head Chef -->
+                <div class="staff-card p-3 d-flex align-items-center">
+                    <img src="resimler/head.jpeg" alt="Head of Chef" class="staff-img rounded-circle me-4">
+                    <div>
+                        <h3 class="highlight">Abdulkadir Usta</h3>
+                        <h5 class="text-muted mb-2">Head Chef</h5>
+                        <p>Award-winning chef specializing in world cuisine who creates unforgettable tastes with his special recipes and innovative approach.</p>
+                    </div>
+                </div>
+
+                <!-- Waitress -->
+                <div class="staff-card p-3 d-flex align-items-center">
+                    <img src="resimler/shakira.jpg" alt="Waitress" class="staff-img rounded-circle me-4">
+                    <div>
+                        <h3 class="highlight">Shakira</h3>
+                        <h5 class="text-muted mb-2">Waitress</h5>
+                        <p>Provides excellent service to our guests with her warm smile and attentive approach.</p>
+                    </div>
+                </div>
+
+                <!-- Cashier -->
+                <div class="staff-card p-3 d-flex align-items-center">
+                    <img src="resimler/Rihanna.png" alt="Cashier" class="staff-img rounded-circle me-4">
+                    <div>
+                        <h3 class="highlight">Rihanna</h3>
+                        <h5 class="text-muted mb-2">Cashier</h5>
+                        <p>Ensures quick and secure payment processing for all our customers.</p>
+                    </div>
+                </div>
+
+                <!-- Cleaner -->
+                <div class="staff-card p-3 d-flex align-items-center">
+                    <img src="resimler/jinx.jpeg" alt="Cleaner" class="staff-img rounded-circle me-4">
+                    <div>
+                        <h3 class="highlight">Ms. Jinx</h3>
+                        <h5 class="text-muted mb-2">Cleaner</h5>
+                        <p>Maintains the highest standards of hygiene and cleanliness throughout our restaurant.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Restaurant Info -->
+            <div class="col-lg-5">
+                <img src="resimler/rest3.jpeg" alt="Restaurant" class="restaurant-img img-fluid w-100">
+                
+                <div class="info-box mb-4">
+                    <h2 class="section-title fw-bold">Restaurant Information</h2>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span><i class="fas fa-calendar-alt me-2 highlight"></i> <strong>Year of Establishment:</strong></span>
+                            <span>2005</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span><i class="fas fa-map-marker-alt me-2 highlight"></i> <strong>Location:</strong></span>
+                            <span>İstanbul, Türkiye</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span><i class="fas fa-utensils me-2 highlight"></i> <strong>Cuisine:</strong></span>
+                            <span>Ottoman & Grill</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2">
+                            <span><i class="fas fa-users me-2 highlight"></i> <strong>Capacity:</strong></span>
+                            <span>120 Guests</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="social-icons text-center mb-3">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                    </div>
+                    <p class="text-center mb-0">
+                        <i class="fas fa-phone me-2 highlight"></i> +90 212 123 4567<br>
+                        <i class="fas fa-envelope me-2 highlight"></i> info@restaurant.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
